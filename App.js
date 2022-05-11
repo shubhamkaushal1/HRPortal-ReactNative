@@ -27,7 +27,7 @@ const App: () => Node = () => {
       }
     })();
   }, []);
-
+ 
   GoogleSignin.configure({
     webClientId: '731986561365-vlkhc2gm3v2lba1sp0486j2grgre23jt.apps.googleusercontent.com',
   });
