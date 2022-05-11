@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "731986561365",
+    "project_id": "reactbootesnull",
+    "storage_bucket": "reactbootesnull.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731986561365:android:54566c4cef9bf695d847dc",
+        "android_client_info": {
+          "package_name": "com.bootesnullsocialauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731986561365-8gndscgrf5di91mfb7svs1r14fkpdumk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bootesnullsocialauth",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "731986561365-ijfpo435n7ibk36i7efu1ihvajkr3cln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bootesnullsocialauth",
+            "certificate_hash": "7ffa0a562a4fc27c2d4cb2e242bd6c9da4e67287"
+          }
+        },
+        {
+          "client_id": "731986561365-vlkhc2gm3v2lba1sp0486j2grgre23jt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVGRk3s2DVhk2qpmxXE15WKekZ4jq_Rjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731986561365-vlkhc2gm3v2lba1sp0486j2grgre23jt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
