@@ -1,74 +1,42 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
-import React, { useEffect, useState } from 'react';
-import type { Node } from 'react';
-import {
-  View, Button
-} from 'react-native';
-import {auth, createUserDocument } from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+// import * as firebase from 'firebase';
+import firebase from 'firebase/compat/app';
+import apiKeys from './config/keys';
+import WelcomeScreen from './screens/WelcomeScreen';
+// import SignUp from './screens/SignUp';
+import SignIn from './screens/SignIn';
+import LoadingScreen from './screens/LoadingScreen--';
+import DashboardScreen from './screens/DashboardScreen';
+import { LogBox } from 'react-native';
 
 
-const App: () => Node = () => {
+// import 'firebase/compat/auth';
+// import 'firebase/compat/firestore';
 
-  let [authState, setAuthState] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      let cachedAuth = await getCachedAuthAsync();
-      if (cachedAuth && !authState) {
-        setAuthState(cachedAuth);
-      }
-    })();
-  }, []);
- 
-  GoogleSignin.configure({
-    webClientId: '731986561365-vlkhc2gm3v2lba1sp0486j2grgre23jt.apps.googleusercontent.com',
-  });
+const Stack = createStackNavigator();
 
-  const signInWithGoogleAsync = async () => {
-      // Get the users ID token
-      const { idToken } = await GoogleSignin.signIn();
-
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign-in the user with the credential
-      const user_sign_in = auth().signInWithCredential(googleCredential);
-
-      user_sign_in.then((user) =>{
-        const name = '';
-        await createUserDocument(user, {name})
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
-
+export default function App() {
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
+  if (!firebase.apps.length) {
+    console.log('Connected with Firebase')
+    firebase.initializeApp(apiKeys.firebaseConfig);
   }
 
   return (
-    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      <Button 
-        title='Sign in Google'
-        onPress={signInWithGoogleAsync}
-      />
-      {/* <Button 
-        title='Sign out'
-        onPress={signInWithGoogleAsync}
-      /> */}
-      
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+      {/* <Stack.Screen name={'Loading'} component={LoadingScreen} options={{ headerShown: false }}/> */}
+      <Stack.Screen name='Home' component={WelcomeScreen} options={{ headerShown: false }}/>
+      {/* <Stack.Screen name='Sign Up' component={SignUp} options={{ headerShown: false }}/> */}
+      <Stack.Screen name='Sign In' component={SignIn} options={{ headerShown: false }}/>
+      <Stack.Screen name={'Dashboard'} component={DashboardScreen} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-};
-
-// const styles = StyleSheet.create({
-  
-// });
-
-export default App;
+}
