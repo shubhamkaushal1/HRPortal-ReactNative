@@ -10,7 +10,9 @@
  import type { Node } from 'react';
  import { GoogleSignin } from '@react-native-google-signin/google-signin';
  import auth from '@react-native-firebase/auth';
+ import { TouchableOpacity } from 'react-native-gesture-handler';
  import {
+   ImageBackground, 
    SafeAreaView,
    ScrollView,
    StatusBar,
@@ -39,20 +41,25 @@ import 'firebase/compat/auth';
  
    user_sign_in.then((user)=>{
     navigation.navigate('Dashboard', {user:user});
-     console.log(user,idToken);
+     //console.log(user,idToken);
    }).catch((error)=>{
      console.log("error",error)
   })
    }
-   
+
+
    return (
-     <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-       <Button
+    <ImageBackground
+    style={{height:800,flex:1,justifyContent:'center',alignItems:'center'}}
+    source={require('../../assets/background.jpg')}>
+    <TouchableOpacity onPress={() => navigation.navigate('Sign In')}>
+    <Button
          title="Sign In With 
          Google"  
          onPress={signInWithGoogleAsync}    
        />
-     </View>
+    </TouchableOpacity>
+    </ImageBackground>
      
    );
  };

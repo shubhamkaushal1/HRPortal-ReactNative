@@ -1,25 +1,41 @@
 
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-// import * as firebase from 'firebase';
+import {
+  createAppContainer,
+  createSwitchNavigator
+} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack'
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import firebase from 'firebase/compat/app';
 import apiKeys from './config/keys';
-import WelcomeScreen from './screens/WelcomeScreen';
-// import SignUp from './screens/SignUp';
-import SignIn from './screens/SignIn';
-import LoadingScreen from './screens/LoadingScreen--';
-import DashboardScreen from './screens/DashboardScreen';
+import SignIn from './src/screens/SignIn';
+import DashboardScreen from './src/screens/DashboardScreen';
+import AttendenceScreen from './src/screens/AttendenceScreen';
 import { LogBox } from 'react-native';
+import { Provider as AuthProvider } from './src/context/AuthContext';
+import { setNavigator } from './src/navigationRef';
+import { connect } from 'react-redux';
+import { changeCount } from './actions/counts';
+import { bindActionCreators } from 'redux';
+
+// const Stack = createStackNavigator();
+
+const switchNavigator = createSwitchNavigator({
+  loginFlow:createStackNavigator({
+    SignIn: SignIn
+  }),
+  mainFlow:createBottomTabNavigator({
+    Dashboard : DashboardScreen,
+    Attendence : AttendenceScreen
+  })
+})
 
 
-// import 'firebase/compat/auth';
-// import 'firebase/compat/firestore';
 
+const App = createAppContainer(switchNavigator);
 
-const Stack = createStackNavigator();
+export default () => {
 
-export default function App() {
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
   ]);
@@ -27,16 +43,9 @@ export default function App() {
     console.log('Connected with Firebase')
     firebase.initializeApp(apiKeys.firebaseConfig);
   }
-
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-      {/* <Stack.Screen name={'Loading'} component={LoadingScreen} options={{ headerShown: false }}/> */}
-      <Stack.Screen name='Home' component={WelcomeScreen} options={{ headerShown: false }}/>
-      {/* <Stack.Screen name='Sign Up' component={SignUp} options={{ headerShown: false }}/> */}
-      <Stack.Screen name='Sign In' component={SignIn} options={{ headerShown: false }}/>
-      <Stack.Screen name={'Dashboard'} component={DashboardScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    <AuthProvider>
+      <App ref={(navigator) => { setNavigator(navigator) }}/>
+    </AuthProvider>
+  )
 }
