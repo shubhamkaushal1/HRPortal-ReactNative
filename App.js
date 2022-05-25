@@ -1,74 +1,51 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
-import React, { useEffect, useState } from 'react';
-import type { Node } from 'react';
+import React from 'react';
 import {
-  View, Button
-} from 'react-native';
-import {auth, createUserDocument } from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+  createAppContainer,
+  createSwitchNavigator
+} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack'
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+import firebase from 'firebase/compat/app';
+import apiKeys from './config/keys';
+import SignIn from './src/screens/SignIn';
+import DashboardScreen from './src/screens/DashboardScreen';
+import AttendenceScreen from './src/screens/AttendenceScreen';
+import { LogBox } from 'react-native';
+import { Provider as AuthProvider } from './src/context/AuthContext';
+import { setNavigator } from './src/navigationRef';
+import { connect } from 'react-redux';
+import { changeCount } from './actions/counts';
+import { bindActionCreators } from 'redux';
+
+// const Stack = createStackNavigator();
+
+const switchNavigator = createSwitchNavigator({
+  loginFlow:createStackNavigator({
+    SignIn: SignIn
+  }),
+  mainFlow:createBottomTabNavigator({
+    Dashboard : DashboardScreen,
+    Attendence : AttendenceScreen
+  })
+})
 
 
-const App: () => Node = () => {
 
-  let [authState, setAuthState] = useState(null);
+const App = createAppContainer(switchNavigator);
 
-  useEffect(() => {
-    (async () => {
-      let cachedAuth = await getCachedAuthAsync();
-      if (cachedAuth && !authState) {
-        setAuthState(cachedAuth);
-      }
-    })();
-  }, []);
- 
-  GoogleSignin.configure({
-    webClientId: '731986561365-vlkhc2gm3v2lba1sp0486j2grgre23jt.apps.googleusercontent.com',
-  });
+export default () => {
 
-  const signInWithGoogleAsync = async () => {
-      // Get the users ID token
-      const { idToken } = await GoogleSignin.signIn();
-
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign-in the user with the credential
-      const user_sign_in = auth().signInWithCredential(googleCredential);
-
-      user_sign_in.then((user) =>{
-        const name = '';
-        await createUserDocument(user, {name})
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
-
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
+  if (!firebase.apps.length) {
+    console.log('Connected with Firebase')
+    firebase.initializeApp(apiKeys.firebaseConfig);
   }
-
   return (
-    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      <Button 
-        title='Sign in Google'
-        onPress={signInWithGoogleAsync}
-      />
-      {/* <Button 
-        title='Sign out'
-        onPress={signInWithGoogleAsync}
-      /> */}
-      
-    </View>
-  );
-};
-
-// const styles = StyleSheet.create({
-  
-// });
-
-export default App;
+    <AuthProvider>
+      <App ref={(navigator) => { setNavigator(navigator) }}/>
+    </AuthProvider>
+  )
+}
