@@ -12,12 +12,12 @@ import SignIn from './src/screens/SignIn';
 import DashboardScreen from './src/screens/DashboardScreen';
 import AttendenceScreen from './src/screens/AttendenceScreen';
 import { LogBox } from 'react-native';
-import { Provider as AuthProvider } from './src/context/AuthContext';
+// import { Provider as AuthProvider } from './src/context/AuthContext';
 import { setNavigator } from './src/navigationRef';
-import { connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import { changeCount } from './actions/counts';
 import { bindActionCreators } from 'redux';
-
+import Store from './src/redux/store';
 // const Stack = createStackNavigator();
 
 const switchNavigator = createSwitchNavigator({
@@ -44,8 +44,8 @@ export default () => {
     firebase.initializeApp(apiKeys.firebaseConfig);
   }
   return (
-    <AuthProvider>
+    <Provider store={Store}>
       <App ref={(navigator) => { setNavigator(navigator) }}/>
-    </AuthProvider>
+    </Provider>
   )
 }

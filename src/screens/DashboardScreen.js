@@ -1,33 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { State, TouchableOpacity } from 'react-native-gesture-handler';
 import firebase from 'firebase/compat/app';
 import auth from '@react-native-firebase/auth';
 import {LoggingOut} from "../api/firebaseMethods";
-
+import { useSelector } from 'react-redux';
+import { setDetails, setToken } from '../redux/actions';
 
 export default function Dashboard({ navigation }) {
-
-  const profile = navigation.state.params.user.additionalUserInfo.profile;
-  const mobile = JSON.stringify(navigation.state.params.user.user.phoneNumber);
-  const user_profile_data = JSON.parse(JSON.stringify(profile));
-  const name = user_profile_data.name;
-  const email = user_profile_data.email;
-  console.log(navigation);
-
-  const handlePress = () => {
-    LoggingOut();
-    console.log("hello")
-    navigation.replace('SignIn');
-  };
+  const data = useSelector(state => state.userReducer);
+  
 
   return (
     <View>
       <Text>Dashboard</Text>
-      <Text >Hi {name}</Text>
-      <Text >Hi {mobile}</Text>
-      <Text>Welcome {email} </Text>
-        {/* <Text onPress={handlePress} >Log Out</Text> */}
+      <Text >Name { data.details.name }</Text>
+      <Text >Email { data.details.email }</Text>
+      <Text >Token {data.token}</Text>
     </View>
   )
 }

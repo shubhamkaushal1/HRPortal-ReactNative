@@ -23,8 +23,13 @@
    Button
  } from 'react-native';
 import 'firebase/compat/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { setDetails, setToken } from '../redux/actions';
 
  const SignIn: () => Node = ({navigation}) => {
+  const { details, token } = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+
    GoogleSignin.configure({
      webClientId: '1040528052761-t3f42v2jiccs82j283v62grsvc1l7hg3.apps.googleusercontent.com',
    });
@@ -40,8 +45,12 @@ import 'firebase/compat/auth';
    const user_sign_in = auth().signInWithCredential(googleCredential);
  
    user_sign_in.then((user)=>{
-    navigation.navigate('Dashboard', {user:user});
-     //console.log(user,idToken);
+    //  console.log(user.additionalUserInfo.profile);
+     const userProfile = user.additionalUserInfo.profile;
+     dispatch(setDetails(userProfile));
+     dispatch(setToken(idToken));
+    navigation.navigate('Dashboard');
+
    }).catch((error)=>{
      console.log("error",error)
   })
