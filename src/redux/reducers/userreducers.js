@@ -1,4 +1,4 @@
-import { SET_USER_DETAILS, SET_USER_TOKEN } from './actions';
+import { SET_USER_DETAILS, SET_USER_TOKEN } from '../actions/useractions';
 
 const initialState = {
     details: {},

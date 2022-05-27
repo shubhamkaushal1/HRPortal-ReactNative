@@ -24,7 +24,7 @@
  } from 'react-native';
 import 'firebase/compat/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { setDetails, setToken } from '../redux/actions';
+import { setDetails, setToken } from '../redux/actions/useractions';
 
  const SignIn: () => Node = ({navigation}) => {
   const { details, token } = useSelector(state => state.userReducer);

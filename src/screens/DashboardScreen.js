@@ -5,7 +5,7 @@ import firebase from 'firebase/compat/app';
 import auth from '@react-native-firebase/auth';
 import {LoggingOut} from "../api/firebaseMethods";
 import { useSelector } from 'react-redux';
-import { setDetails, setToken } from '../redux/actions';
+import { setDetails, setToken } from '../redux/actions/useractions';
 
 export default function Dashboard({ navigation }) {
   const data = useSelector(state => state.userReducer);
