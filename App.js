@@ -18,7 +18,6 @@ import { Provider } from 'react-redux';
 import { changeCount } from './actions/counts';
 import { bindActionCreators } from 'redux';
 import Store from './src/redux/store';
-// const Stack = createStackNavigator();
 
 const switchNavigator = createSwitchNavigator({
   loginFlow:createStackNavigator({
@@ -38,6 +37,7 @@ export default () => {
 
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
+    'Possible Unhandled Promise Rejection'
   ]);
   if (!firebase.apps.length) {
     console.log('Connected with Firebase')
