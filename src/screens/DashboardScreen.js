@@ -14,9 +14,9 @@ export default function Dashboard({ navigation }) {
   // const { details, token } = useSelector(state => state.userReducer);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const { attendence } = useSelector(state => state.userReducer);
-  // console.log(data.jwt);
+  // console.log(data);
   if(isEnabled == true){
-    const apiUrl = 'https://966c-203-145-168-10.ngrok.io';
+    const apiUrl = 'https://58ed-203-145-168-10.ngrok.io/';
       const checkedIn = async() =>{
       
         try{
@@ -40,7 +40,7 @@ export default function Dashboard({ navigation }) {
 
       checkedIn()
   } else {
-    const apiUrl = 'https://966c-203-145-168-10.ngrok.io';
+    const apiUrl = 'https://58ed-203-145-168-10.ngrok.io/';
       const checkedOut = async() =>{
       
         try{
