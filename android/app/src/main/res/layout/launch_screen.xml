@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:background="@color/catalyst_logbox_background"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="278dp"
+        android:layout_height="323dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="72dp"
+        android:maxWidth="@android:dimen/thumbnail_width"
+        android:maxHeight="@android:dimen/thumbnail_height"
+        android:minWidth="@android:dimen/thumbnail_width"
+        android:minHeight="@android:dimen/thumbnail_height"
+        android:src="@drawable/mink_logo" />
+</RelativeLayout>

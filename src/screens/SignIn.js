@@ -1,32 +1,53 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
- import React, { useEffect } from 'react';
- import type { Node } from 'react';
- import { GoogleSignin } from '@react-native-google-signin/google-signin';
- import auth from '@react-native-firebase/auth';
- import { TouchableOpacity } from 'react-native-gesture-handler';
- import {
-   ImageBackground, 
-   SafeAreaView,
-   ScrollView,
-   StatusBar,
-   StyleSheet,
-   Text,
-   useColorScheme,
-   View,
-   Button
- } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import type { Node } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import {
+  ImageBackground, 
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+  Button,
+  Alert
+} from 'react-native';
 import 'firebase/compat/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { setDetails, setToken, setJWT } from '../redux/actions/useractions';
+// import {signIn} from './API/firebaseMethods';
 
- const SignIn: () => Node = ({navigation}) => {
+// export default function SignIn() {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const { details, token, jwt } = useSelector(state => state.userReducer);
+//   const dispatch = useDispatch();
+
+//   const handlePress = () => {
+//     if (!email) {
+//       Alert.alert('Email field is required.');
+//     }
+
+//     if (!password) {
+//       Alert.alert('Password field is required.');
+//     }
+
+//     // signIn(email, password);
+//     setEmail('');
+//     setPassword('');
+//   };
+
+//   return (
+//     <View >
+//       <Text >Sign in to your account:</Text>
+
+//     </View>
+//   );
+// }
+const SignIn: () => Node = ({navigation}) => {
   const { details, token, jwt } = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
 
@@ -51,7 +72,7 @@ import { setDetails, setToken, setJWT } from '../redux/actions/useractions';
       firebase_token: idToken
     }
     if (idToken){
-      const apiUrl = 'https://966c-203-145-168-10.ngrok.io';
+      const apiUrl = 'https://58ed-203-145-168-10.ngrok.io/';
       const SignUp = async() =>{
        
       
@@ -105,4 +126,3 @@ import { setDetails, setToken, setJWT } from '../redux/actions/useractions';
  
  
  export default SignIn;
- 
