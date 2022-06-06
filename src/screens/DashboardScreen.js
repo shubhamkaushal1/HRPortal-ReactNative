@@ -6,7 +6,6 @@ import auth from '@react-native-firebase/auth';
 import {LoggingOut} from "../api/firebaseMethods";
 import { useSelector, useDispatch, setAttendence } from 'react-redux';
 import { setDetails, setToken, setJWT } from '../redux/actions/useractions';
-import { die } from 'immer/dist/internal';
 
 export default function Dashboard({ navigation }) {
   const data = useSelector(state => state.userReducer);
@@ -14,11 +13,10 @@ export default function Dashboard({ navigation }) {
   // const { details, token } = useSelector(state => state.userReducer);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const { attendence } = useSelector(state => state.userReducer);
-  // console.log(data);
+  console.log(data);
   if(isEnabled == true){
-    const apiUrl = 'https://58ed-203-145-168-10.ngrok.io/';
+    const apiUrl = 'https://58fe-203-145-168-10.ngrok.io';
       const checkedIn = async() =>{
-      
         try{
           const response = await fetch(`${apiUrl}/api/checkin-checkout/checkin`,{
             method: 'POST',
@@ -40,7 +38,7 @@ export default function Dashboard({ navigation }) {
 
       checkedIn()
   } else {
-    const apiUrl = 'https://58ed-203-145-168-10.ngrok.io/';
+    const apiUrl = 'https://58fe-203-145-168-10.ngrok.io';
       const checkedOut = async() =>{
       
         try{
@@ -65,19 +63,23 @@ export default function Dashboard({ navigation }) {
       checkedOut()
   }
   return (
-    <View>
-      <Text>Dashboard</Text>
-      <Switch
+    <View style={{height:800, flex:2,justifyContent:'center',alignItems:'center'}}>
+      <View style={{height:182, justifyContent:'center',alignItems:'center', backgroundColor:'#1DA1F2'}}>
+        <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
         ios_backgroundColor="#3e3e3e"
         onValueChange={toggleSwitch}
         value={isEnabled}
       />
+      
+      </View>
+      <View style={{height:618, borderTopLeftRadius: 30}}>
       <Text >Name { data.details.name }</Text>
       <Text >Email { data.details.email }</Text>
       <Text >Token {data.token}</Text>
       <Text >Jwt {data.jwt}</Text>
+      </View>
     </View>
   )
 }
