@@ -39,13 +39,14 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator useLegacyImplementation screenOptions={{ drawerStyle: { backgroundColor: '#c6cbef', width: 240 } }}>
           <Drawer.Screen name="SignIn" component={SignIn} options={{ headerShown: false,drawerLabel: () => null }}/>
-          <Drawer.Screen name="Dashboard" component={Dashboard} options={{ headerShown: true,headerTitle:()=>null}}/>
+          <Drawer.Screen name="Dashboard" component={Dashboard} options={{ title: 'My home', headerStyle: { backgroundColor: '#28AAF9', }, headerShown: true, headerTitle:()=>null, headerTintColor: '#fff', headerTitleStyle: { fontWeight: 'bold', } }}/>
           <Drawer.Screen name="Attendence" component={Attendence} options={{ headerShown: true,headerTitle:()=>null }}/>
         </Drawer.Navigator>
     </NavigationContainer>
     </Provider>
   );
 }
+
 
 const styles=StyleSheet.create({
   hide:{

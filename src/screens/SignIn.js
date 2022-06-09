@@ -46,7 +46,7 @@ const SignIn: () => Node = ({navigation}) => {
       firebase_token: idToken
     }
     if (idToken){
-      const apiUrl = 'https://58fe-203-145-168-10.ngrok.io';
+      const apiUrl = 'https://9a79-203-145-168-10.ngrok.io';
       const SignUp = async() =>{
         console.log('ergr');
 
@@ -75,7 +75,11 @@ const SignIn: () => Node = ({navigation}) => {
      const userProfile = user.additionalUserInfo.profile;
      dispatch(setDetails(userProfile));
      dispatch(setToken(idToken));
-    navigation.navigate('Dashboard');
+    if(jwt != null){
+      navigation.navigate('Dashboard');
+    } else {
+      console.error('Not Signed in');
+    }
 
     }).catch((error)=>{
       console.log("sdgsdg",error)
