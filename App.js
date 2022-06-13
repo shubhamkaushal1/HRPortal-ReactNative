@@ -37,7 +37,7 @@ export default function App() {
   return (
     <Provider store={Store}>
       <NavigationContainer>
-        <Drawer.Navigator useLegacyImplementation screenOptions={{ drawerStyle: { backgroundColor: '#c6cbef', width: 240 } }}>
+        <Drawer.Navigator useLegacyImplementation screenOptions={{ drawerStyle: { backgroundColor: '#FFF', width: 240 } }}>
           <Drawer.Screen name="SignIn" component={SignIn} options={{ headerShown: false,drawerLabel: () => null }}/>
           <Drawer.Screen name="Dashboard" component={Dashboard} options={{ title: 'My home', headerStyle: { backgroundColor: '#28AAF9', }, headerShown: true, headerTitle:()=>null, headerTintColor: '#fff', headerTitleStyle: { fontWeight: 'bold', } }}/>
           <Drawer.Screen name="Attendence" component={Attendence} options={{ headerShown: true,headerTitle:()=>null }}/>
