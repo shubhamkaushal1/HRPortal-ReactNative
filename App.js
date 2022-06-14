@@ -9,6 +9,8 @@ import apiKeys from './config/keys';
 import SignIn from './src/screens/SignIn';
 import Dashboard from './src/screens/DashboardScreen';
 import Attendence from './src/screens/AttendenceScreen';
+import LeaveApplyScreen from './src/screens/LeaveApplyScreen';
+import LeaveScreen from './src/screens/LeavesScreen';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { View, Text, StyleSheet, Alert,Switch,Button,LogBox} from 'react-native';
@@ -41,6 +43,9 @@ export default function App() {
           <Drawer.Screen name="SignIn" component={SignIn} options={{ headerShown: false,drawerLabel: () => null }}/>
           <Drawer.Screen name="Dashboard" component={Dashboard} options={{ title: 'My home', headerStyle: { backgroundColor: '#28AAF9', }, headerShown: true, headerTitle:()=>null, headerTintColor: '#fff', headerTitleStyle: { fontWeight: 'bold', } }}/>
           <Drawer.Screen name="Attendence" component={Attendence} options={{ headerShown: true,headerTitle:()=>null }}/>
+          <Drawer.Screen name="LeaveApplyScreen" component={LeaveApplyScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
+          <Drawer.Screen name="Leaves" component={LeaveScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
+          
         </Drawer.Navigator>
     </NavigationContainer>
     </Provider>
