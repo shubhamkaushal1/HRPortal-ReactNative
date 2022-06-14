@@ -16,9 +16,10 @@ import {
   View,
   Button
 } from 'react-native';
+
 import 'firebase/compat/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { setDetails, setToken, setJWT } from '../redux/actions/useractions';
+import { setDetails, setToken, setJWT, setAppUrl } from '../redux/actions/useractions';
 
 
 const SignIn: () => Node = ({navigation}) => {
@@ -40,14 +41,18 @@ const SignIn: () => Node = ({navigation}) => {
    const user_sign_in = auth().signInWithCredential(googleCredential);
     
    user_sign_in.then((user)=>{
+    
     const data = {
       name: user.additionalUserInfo.profile.name,
       email: user.additionalUserInfo.profile.email,
       firebase_token: idToken
     }
+    const apiUrl = 'https://6b26-203-145-168-10.ngrok.io';
+    // dispatch(setAppUrl(apiUrl));
+    
     if (idToken){
-      const apiUrl = 'https://149d-203-145-168-10.ngrok.io';
       const SignUp = async() =>{
+        console.log('ergr');
 
         try{
           const response = await fetch(`${apiUrl}/api/sign-up`,{
@@ -60,7 +65,9 @@ const SignIn: () => Node = ({navigation}) => {
           console.log("New Data",result);
           const jwt = result.data.token;
           dispatch(setJWT(jwt));
+          dispatch(setAppUrl(apiUrl));
           console.log(jwt);
+          console.log(apiUrl);
           }
           catch(err) {
             throw err;

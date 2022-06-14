@@ -14,9 +14,10 @@ import ScrollingButtonMenu from 'react-native-scroll-menu';
 
 export default function Dashboard({ navigation }) {
   const data = useSelector(state => state.userReducer);
+  console.log('dashboard',data.appUrl);
   const [Enable , setEnable]  = useState(false);
   const [leaveId, setLeaveId] = useState(null)
-  const apiUrl = 'https://149d-203-145-168-10.ngrok.io';
+  const apiUrl = data.appUrl;
   const handleLeaveData = (leavedata) =>{
     setLeaveId(leavedata.id)
   }
