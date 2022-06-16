@@ -13,33 +13,33 @@ import DocumentPicker from 'react-native-document-picker';
 
 const LeaveApplyScreen = () => {
   const datass = useSelector(state => state.userReducer);
+  const apiUrl = datass.appUrl;
   const [singleFile, setSingleFile] = useState(null);
   const uploadImage = async () => {
     // Check if any file is selected or not
     if (singleFile != null) {
       // If file selected then create FormData
+      console.log('ddddd',singleFile);
       const fileToUpload = singleFile;
       const data = new FormData();
-      data.append('name', 'Image Upload');
-      data.append('file_attachment', fileToUpload);
+      // data.append('name', 'Image Upload');
+      // data.append('file_attachment', fileToUpload);
+      data.append('leave_type_id','2');
+      data.append('from_date','01/05/2022');
+      data.append('to_date','08/05/2022');
+      data.append('reasons','test');
       // Please change file upload URL
       let obj = {};
       obj['leave_type_id'] = '2';
       obj['from_date'] = '01/05/2022';
       obj['to_date'] = '08/05/2022';
       obj['reasons'] = 'dsdsssssssss';
-      console.log(datass.jwt);
+      console.log(obj);
       let res = await fetch(
-        'https://149d-203-145-168-10.ngrok.io/api/leaves/leaves/store',
+        `${apiUrl}/api/leaves/leaves/store`,
         {
           method: 'post',
-          // body: {'leave_type_id':2,'from_date':'01/05/2022','to_date':'4/05/2022','reasons':'dddd'},
-          body: [obj],
-
-          // headers: {
-          //   // 'Content-Type': 'multipart/form-data; ',
-           
-          // },
+          body: obj,
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${datass.jwt}` },
         }
       );

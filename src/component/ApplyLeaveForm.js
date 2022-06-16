@@ -44,35 +44,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
     setFromDatePicker(false);
   };
 
-    const getData = async() =>{
-   
-      try{
-        
-          const response = await fetch(`${apiUrl}/api/leaves/leave-type/list`,{
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${data.jwt}` },
-            // body: JSON.stringify({})
-          });
-
-          // console.log(response);
-          const result = await response.json();
-          const leaves = result.data;
-          
-          dispatch(setLeavetype(leaves));
-          
-          }
-          catch(err) {
-            throw err;
-            console.log(err);
-          }
-         
-      };
-  useEffect(()=>{
-    getData();
- 
-
-  },[])
-
   const leaveArr = () => {
     const leaveId =[];
     const leaveName =[];
@@ -90,7 +61,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
         value: leaveId[i]
       }
        }
-       console.log(data.jwt);
+  
     return ( 
      
       <Dropdown

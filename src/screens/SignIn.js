@@ -47,7 +47,7 @@ const SignIn: () => Node = ({navigation}) => {
       email: user.additionalUserInfo.profile.email,
       firebase_token: idToken
     }
-    const apiUrl = 'https://6b26-203-145-168-10.ngrok.io';
+    const apiUrl = 'https://6e4f-203-145-168-10.ngrok.io';
     // dispatch(setAppUrl(apiUrl));
     
     if (idToken){
