@@ -41,14 +41,12 @@ export const setLeavetype = leavetypes => dispatch => {
     });
 };
 export const setAppUrl = appUrl => dispatch => {
-    console.log("here");
     dispatch({
         type: SET_APP_URL,
         payload: appUrl,
     });
 };
 export const setLeavelist = leavelist => dispatch => {
-    console.log("gfghsdf");
     dispatch({
         type: SET_LEAVE_LIST,
         payload: leavelist,

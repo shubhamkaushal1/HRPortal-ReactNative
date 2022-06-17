@@ -47,12 +47,12 @@ const SignIn: () => Node = ({navigation}) => {
       email: user.additionalUserInfo.profile.email,
       firebase_token: idToken
     }
-    const apiUrl = 'https://6b26-203-145-168-10.ngrok.io';
+    const apiUrl = 'http://192.168.1.13:3000';
     // dispatch(setAppUrl(apiUrl));
     
     if (idToken){
       const SignUp = async() =>{
-        console.log('ergr');
+        console.log('ergr',idToken);
 
         try{
           const response = await fetch(`${apiUrl}/api/sign-up`,{

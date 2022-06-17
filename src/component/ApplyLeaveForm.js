@@ -90,7 +90,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
         value: leaveId[i]
       }
        }
-       console.log(data.jwt);
+      //  console.log(data.jwt);
     return ( 
      
       <Dropdown

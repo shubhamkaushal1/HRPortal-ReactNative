@@ -14,7 +14,6 @@ import ScrollingButtonMenu from 'react-native-scroll-menu';
 
 export default function Dashboard({ navigation }) {
   const data = useSelector(state => state.userReducer);
-  console.log('dashboard',data.appUrl);
   const [Enable , setEnable]  = useState(false);
   const [leaveId, setLeaveId] = useState(null)
   const apiUrl = data.appUrl;
@@ -24,7 +23,6 @@ export default function Dashboard({ navigation }) {
   const toggle = (state)=>{
     setEnable(state);
   }
-  console.log('this',Enable);
   
   if(Enable == true){
     
@@ -37,7 +35,7 @@ export default function Dashboard({ navigation }) {
           });
        
           const result = await response.json();
-          console.log('checkedin result',result);
+          // console.log('checkedin result',result);
           }
           catch(err) {
             throw err;
