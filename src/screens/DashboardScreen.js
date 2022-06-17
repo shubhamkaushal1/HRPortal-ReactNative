@@ -4,8 +4,9 @@ import { State, TouchableOpacity } from 'react-native-gesture-handler';
 import firebase from 'firebase/compat/app';
 import auth from '@react-native-firebase/auth';
 import {LoggingOut} from "../api/firebaseMethods";
-import { useSelector, useDispatch, setAttendence } from 'react-redux';
-import { setDetails, setToken, setJWT } from '../redux/actions/useractions';
+import { useSelector, useDispatch } from 'react-redux';
+// import { setDetails, setToken, setAttendence,setLeavetype } from '../redux/actions/useractions';
+import { setDetails, setToken, setJWT,setLeavetype,setLeavelist } from '../redux/actions/useractions';
 import ToggleSwitch from 'rn-toggle-switch';
 import { Card,Button } from 'react-native-elements';
 import Santa from "../Img/santa.svg";
@@ -14,15 +15,123 @@ import ScrollingButtonMenu from 'react-native-scroll-menu';
 
 export default function Dashboard({ navigation }) {
   const data = useSelector(state => state.userReducer);
-  console.log('dashboard',data.appUrl);
+  const dispatch = useDispatch();
+  console.log('dashboard',data.leavelist);
   const [Enable , setEnable]  = useState(false);
   const [leaveId, setLeaveId] = useState(null)
   const apiUrl = data.appUrl;
+  const getLeaveLists = async() =>{
+   
+    try{
+      
+        const response = await fetch(`${apiUrl}/api/leaves/leaves/user-by-leave`,{
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${data.jwt}` },
+          // body: JSON.stringify({})
+        });
+
+        // console.log(response);
+        const result = await response.json();
+        const leavesData = result.data;
+        dispatch(setLeavelist(leavesData));
+        }
+        catch(err) {
+          throw err;
+          console.log(err);
+        }
+       
+    };
+
+  const getData = async() =>{
+   
+    try{
+      
+        const response = await fetch(`${apiUrl}/api/leaves/leave-type/list`,{
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${data.jwt}` },
+          // body: JSON.stringify({})
+        });
+
+        // console.log(response);
+        const result = await response.json();
+        const leaves = result.data;
+        
+        dispatch(setLeavetype(leaves));
+        }
+        catch(err) {
+          throw err;
+          console.log(err);
+        }
+       
+    };
+useEffect(()=>{
+  getData();
+  getLeaveLists();
+
+
+},[])
   const handleLeaveData = (leavedata) =>{
     setLeaveId(leavedata.id)
   }
   const toggle = (state)=>{
     setEnable(state);
+  }
+  const leaveTypeLabel =() =>{
+    const leaveIds =[];
+    const leaveName =[];
+    var leaves = data.leavetypes;
+    const ids = leaves.map((val) =>
+    leaveIds.push(val.id),
+    );
+    const name = leaves.map((name) =>
+    leaveName.push(name.leave_type_name),
+    );
+    var finalObj = [];
+    for(var i = 0; i < leaveIds.length; i++){
+      finalObj[i] = {
+        id: leaveIds[i],
+        name:leaveName[i] ,
+        
+      }
+       }
+       return (
+        <ScrollingButtonMenu buttonStyle={{width: 80, height:35, borderRadius: 20, borderColor:"#D4EEFF", backgroundColor:"#D4EEFF", marginHorizontal: 5}}
+        textStyle={{ color: '#024E7D', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold', textAlign:'center', justifyContent: 'center'}}
+        activeColor = '#D4EEFF'
+        activeBackgroundColor= '#024E7D'
+           items={finalObj}
+          onPress={handleLeaveData}
+          selected={leaveId}
+      />
+       );
+  }
+  const leaveLists = () => {
+        
+    const users = data.leavelist;
+    // console.log('users');
+    return ( 
+   
+      <View style={{flexDirection: "row"}}>
+        {
+      users.map((u, i) => {
+        return (
+          <Card width={164} height={91} borderRadius={5} containerStyle={{elevation:0.5,backgroundColor:'#F8F8F8',marginLeft: 1}} >
+          {
+            <View style={{flexDirection: "column"}}>
+              <Text style={{width:'100%', fontSize:14, textAlign:"left", color: '#657785', fontFamily:'Proxima Nova,Semibold', fontWeight:"normal"}}>Full Day Application</Text>
+              <Text style={{fontSize:18, color: '#13171A', fontFamily:'Proxima Nova,Semibold', fontWeight: 'bold'}}>{u.formatedFromDate}</Text>
+              <Text style={{color: '#CB823B', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold'}}>{u.leave_type_name}</Text>
+            </View>
+        
+          }
+        </Card>
+);
+})
+}
+      </View>
+    
+    );
+  
   }
   console.log('this',Enable);
   
@@ -90,48 +199,8 @@ export default function Dashboard({ navigation }) {
             {
               <View>
               <View style={{flexDirection: "row", marginTop:-20, marginLeft:-20 }}>
-              <ScrollingButtonMenu buttonStyle={{width: 80, height:35, borderRadius: 20, borderColor:"#D4EEFF", backgroundColor:"#D4EEFF", marginHorizontal: 5}}
-              textStyle={{ color: '#024E7D', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold', textAlign:'center', justifyContent: 'center'}}
-              activeColor = '#D4EEFF'
-              activeBackgroundColor= '#024E7D'
-                items={[
-                    {
-                        id: 1,
-                        name: 'Sekizli',
-                    },
-                    {
-                        id: 2,
-                        name: 'Penguen',
-                    },
-                    {
-                        id: 3,
-                        name: 'Ermec',
-                    },
-                    {
-                        id: 4,
-                        name: 'Emre',
-                    },
-                    {
-                        id: 5,
-                        name: 'Hasan',
-                    },
-                    {
-                        id: 6,
-                        name: 'Elif',
-                    },
-                    {
-                        id: 7,
-                        name: 'Vegin',
-                    },
-                    {
-                        id: 8,
-                        name: 'Sevim',
-                    },
-                ]}
-                
-                onPress={handleLeaveData}
-                selected={leaveId}
-            />
+              {leaveTypeLabel()}
+              
                 {/* <Button 
                   title="Casual"
                   buttonStyle={{ backgroundColor: '#FCEFE3' }}
@@ -166,8 +235,8 @@ export default function Dashboard({ navigation }) {
                   titleStyle={{ color: '#492596', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold' }}
                 /> */}
               </View>
-              <View style={{flexDirection: "row"}}>
-                <Card width={164} height={91} borderRadius={5} containerStyle={{elevation:0.5,backgroundColor:'#F8F8F8',marginLeft: 1}} >
+              {/* <View style={{flexDirection: "row"}}> */}
+                {/* <Card width={164} height={91} borderRadius={5} containerStyle={{elevation:0.5,backgroundColor:'#F8F8F8',marginLeft: 1}} >
                   {
                     <View style={{flexDirection: "column"}}>
                       <Text style={{width:'100%', fontSize:14, textAlign:"left", color: '#657785', fontFamily:'Proxima Nova,Semibold', fontWeight:"normal"}}>Full Day Application</Text>
@@ -186,8 +255,12 @@ export default function Dashboard({ navigation }) {
                     </View>
                 
                   }
-                </Card>
-              </View>
+                </Card> */}
+                <ScrollView horizontal={true}>
+                {leaveLists()}
+                </ScrollView>
+                
+              {/* </View> */}
               </View>
               
             }
