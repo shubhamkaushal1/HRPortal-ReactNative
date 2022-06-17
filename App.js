@@ -18,7 +18,7 @@ import { Provider } from 'react-redux';
 import Store from './src/redux/store';
 import SplashScreen from  "react-native-splash-screen";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import LeaveDetails from './src/screens/LeaveDetailsScreen'
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -45,7 +45,8 @@ export default function App() {
           <Drawer.Screen name="Attendence" component={Attendence} options={{ headerShown: true,headerTitle:()=>null }}/>
           <Drawer.Screen name="LeaveApplyScreen" component={LeaveApplyScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
           <Drawer.Screen name="Leaves" component={LeaveScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
-          
+          <Drawer.Screen name="Leave Details" component={LeaveDetails} options={{ headerShown: true,headerTitle:()=>null }}/>
+           
         </Drawer.Navigator>
     </NavigationContainer>
     </Provider>

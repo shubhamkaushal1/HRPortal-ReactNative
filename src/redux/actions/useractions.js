@@ -7,6 +7,8 @@ export const SET_USER_ATTENDENCE = 'SET_USER_ATTENDENCE';
 export const SET_USER_LEAVE_TYPES = 'SET_USER_LEAVE_TYPES';
 export const SET_APP_URL = 'SET_APP_URL';
 export const SET_LEAVE_LIST = 'SET_LEAVE_LIST';
+export const SET_LEAVE_DETAIL_ID = 'SET_LEAVE_DETAIL_ID';
+export const SET_LEAVE_DETAILS = 'SET_LEAVE_DETAILS';
 
 
 export const setDetails = details => dispatch => {
@@ -44,6 +46,18 @@ export const setAppUrl = appUrl => dispatch => {
     dispatch({
         type: SET_APP_URL,
         payload: appUrl,
+    });
+};
+export const setLeaveDetailId = leave_detail_id => dispatch => {
+    dispatch({
+        type: SET_LEAVE_DETAIL_ID,
+        payload: leave_detail_id,
+    });
+};
+export const setLeaveDetails = leave_details => dispatch => {
+    dispatch({
+        type: SET_LEAVE_DETAILS,
+        payload: leave_details,
     });
 };
 export const setLeavelist = leavelist => dispatch => {
