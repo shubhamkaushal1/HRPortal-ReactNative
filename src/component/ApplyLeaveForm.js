@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View,TextInput,Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View,TextInput,Image,TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import {Input, Button } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { setDetails, setToken, setJWT,setLeavetype } from '../redux/actions/useractions';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -12,8 +13,10 @@ import {
   faAddressBook,
   faCalendar,
   faCalendarAlt,
+  faPaperclip
 } from "@fortawesome/free-solid-svg-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DocumentPicker from 'react-native-document-picker';
 
   const DropdownComponent = () => {
     
@@ -63,29 +66,34 @@ import DateTimePicker from '@react-native-community/datetimepicker';
        }
       //  console.log(data.jwt);
     return ( 
-     
-      <Dropdown
-      style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-      placeholderStyle={styles.placeholderStyle}
-      selectedTextStyle={styles.selectedTextStyle}
-      inputSearchStyle={styles.inputSearchStyle}
-      iconStyle={styles.iconStyle}
-      data={finalObj}
-      search={false}
-      maxHeight={300}
-      labelField="label"
-      valueField="value"
-      placeholder={!isFocus ? 'Select item' : '...'}
-      searchPlaceholder="Search..."
-      value={value}
-      onFocus={() => setIsFocus(true)}
-      onBlur={() => setIsFocus(false)}
-      onChange={item => {
-        setValue(item.value);
-        setIsFocus(false);
-      }}
-
-    />
+     <View style={{marginTop:15}}>
+      <View>
+        <Text style={{fontSize:16, fontWeight:'600'}}>Type</Text>
+      </View>
+      <View>
+        <Dropdown
+        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={finalObj}
+        search={false}
+        maxHeight={300}
+        labelField="label"
+        valueField="value"
+        placeholder={!isFocus ? 'Select item' : '...'}
+        searchPlaceholder="Search..."
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={item => {
+          setValue(item.value);
+          setIsFocus(false);
+        }}
+        />
+      </View>
+    </View>
     
     );
   }
@@ -100,35 +108,86 @@ import DateTimePicker from '@react-native-community/datetimepicker';
       return null;
     };
 
+    const selectFile = async () => {
+      try {
+      
+        const res = await DocumentPicker.pick({
+          
+          type: [DocumentPicker.types.allFiles],
+        });
+        console.log('res : ' + JSON.stringify(res));
+        setSingleFile(res);
+      } catch (err) {
+        console.log('errrrr');
+        setSingleFile(null);
+        if (DocumentPicker.isCancel(err)) {
+          alert('Canceled');
+        } else {
+          alert('Unknown Error: ' + JSON.stringify(err));
+          throw err;
+        }
+      }
+    };
+
+    const reasonInput = () => {
+ 
+        return (
+          <View style={{backgroundColor:'#F4F5F7', marginTop:15, paddingVertical:12,}}>
+            <View style={{paddingHorizontal:12}}>
+              <Text>Reason</Text>
+              <TextInput numberOfLines={4} multiline={true} />
+            </View>
+            <View style={{paddingHorizontal:12}}>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              activeOpacity={0.5}
+              onPress={selectFile}>
+            <FontAwesomeIcon icon={faPaperclip} size={16} style={{ color: "#657785", paddingVertical:18 }} />
+            </TouchableOpacity>
+            </View>
+          </View>
+        );
+
+    };
+
+
     const datePickers = () => {
      
         return (
           <View styles={styles.MainContainer}>
-
           <View style={styles.sectionStyle}>
-          <FontAwesomeIcon icon={faCalendarAlt} size={30} style={{ color: "blue" }} />
-                
-                <TextInput
-                  style={{flex: 1}}
-                  placeholder="To"
-                  underlineColorAndroid="transparent"
-                  // editable={false}
-                  onFocus={showDatePickerTo}
-                  value={todate.toDateString()}
-                />
-                <FontAwesomeIcon icon={faCalendarAlt} size={30} style={{ color: "blue" }} />
-                
-                <TextInput
-                  style={{flex: 1}}
-                  placeholder="From"
-                  underlineColorAndroid="transparent"
-                  // editable={false}
-                  onFocus={showDatePickerFrom}
-                  value={fromdate.toDateString()}
-                />
-              </View>
-          
-          
+            <View style={{flexDirection:'column'}}>
+            <View>
+              <Text style={{fontSize:16, fontWeight:'600'}}>From</Text>
+            </View>
+            <View style={{flexDirection:'row', borderWidth:0.5, borderRadius:2, width:150, height:35, paddingHorizontal:10}}>
+              <FontAwesomeIcon icon={faCalendarAlt} size={16} style={{ color: "#657785", paddingVertical:18 }} />
+              <TextInput
+                placeholder="To"
+                underlineColorAndroid="transparent"
+                style={{paddingVertical:1, color:'#657785', fontSize:14}}
+                // editable={false}
+                onFocus={showDatePickerTo}
+                value={todate.toDateString()}/>
+            </View>
+            </View>
+            <View style={{flexDirection:'column'}}>
+            <View>
+              <Text style={{fontSize:16, fontWeight:'600'}}>To</Text>
+            </View>
+            <View style={{flexDirection:'row', borderWidth:0.5, borderRadius:2, width:150, height:35, paddingHorizontal:10}}>
+              <FontAwesomeIcon icon={faCalendarAlt} size={16} style={{ color: "#657785", paddingVertical:18 }} />
+              <TextInput
+                placeholder="From"
+                underlineColorAndroid="transparent"
+                style={{paddingVertical:1, color:'#657785', fontSize:14}}
+                // editable={false}
+                onFocus={showDatePickerFrom}
+                value={fromdate.toDateString()}/>
+            </View>
+
+            </View>
+          </View>
             {todatePicker && (
               <DateTimePicker
                 value={todate}
@@ -149,9 +208,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
                 style={styles.datePicker}
               />
             )}
-          
-          
-          
           </View>
         );
       
@@ -161,10 +217,20 @@ import DateTimePicker from '@react-native-community/datetimepicker';
     return (
       
       <View style={styles.container}>
-        
-        {renderLabel()}
-        {leaveArr()}
-        {datePickers()}
+        <View>
+          {renderLabel()}
+          {datePickers()}
+          {leaveArr()}
+          {reasonInput()}
+        </View>
+        <View style={{marginTop:15, marginLeft:250}}>
+          <Button
+            title={`Submit`}
+            containerStyle={{ width: 80, height:35, borderRadius: 20 }}
+            buttonStyle={{ backgroundColor: '#23B33A', width: 86, height:35, }}
+            titleStyle={{ color: '#FFFFFF', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold'}}
+            />
+        </View>
       </View>
     );
   };
@@ -177,8 +243,11 @@ import DateTimePicker from '@react-native-community/datetimepicker';
       padding: 16,
     },
     dropdown: {
-      height: 50,
-      borderColor: 'gray',
+      height: 30,
+      width:150,
+      backgroundColor:'#F4F5F7',
+      color:'#657785',
+      borderColor: '#DBDBDB',
       borderWidth: 0.5,
       borderRadius: 8,
       paddingHorizontal: 8,
@@ -217,14 +286,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
     },
     sectionStyle: {
       flexDirection: 'row',
-      justifyContent: 'center',
+      justifyContent:'space-between',
       alignItems: 'center',
-      backgroundColor: '#fff',
-      borderWidth: 0.5,
-      borderColor: '#000',
-      height: 40,
-      borderRadius: 5,
-      margin: 10,
     },
     imageStyle: {
       padding: 10,
