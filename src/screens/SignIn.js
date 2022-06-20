@@ -19,11 +19,12 @@ import {
 
 import 'firebase/compat/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { setDetails, setToken, setJWT, setAppUrl } from '../redux/actions/useractions';
+import { setDetails, setToken, setJWT, setAppUrl,setLeavetype,setLeavelist,setTaskList } from '../redux/actions/useractions';
 
 
 const SignIn: () => Node = ({navigation}) => {
   const { details, token, jwt } = useSelector(state => state.userReducer);
+  // console.log('jwt3',jwt);
   const dispatch = useDispatch();
 
    GoogleSignin.configure({
@@ -39,7 +40,8 @@ const SignIn: () => Node = ({navigation}) => {
  
    // Sign-in the user with the credential')
    const user_sign_in = auth().signInWithCredential(googleCredential);
-    
+  //  const datas = useSelector(state => state.userReducer);
+  //  console.log('all data',datas);
    user_sign_in.then((user)=>{
     
     const data = {
@@ -47,31 +49,124 @@ const SignIn: () => Node = ({navigation}) => {
       email: user.additionalUserInfo.profile.email,
       firebase_token: idToken
     }
-    const apiUrl = 'https://6e4f-203-145-168-10.ngrok.io';
-    // dispatch(setAppUrl(apiUrl));
-    
+    const apiUrl = 'http://192.168.1.13:3000';
+    let jwt;
+    dispatch(setAppUrl(apiUrl));
     if (idToken){
       const SignUp = async() =>{
-        console.log('ergr');
-
+        console.log("sign");
         try{
           const response = await fetch(`${apiUrl}/api/sign-up`,{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
           });
-          
+          // console.log("resposse",response)
           const result = await response.json();
-          console.log("New Data",result);
-          const jwt = result.data.token;
+          // console.log("result",result)
+          jwt = result.data.token;
+          // console.log("jwt",jwt)
+
           dispatch(setJWT(jwt));
-          dispatch(setAppUrl(apiUrl));
-          console.log(jwt);
-          console.log(apiUrl);
+          // dispatch(setAppUrl(apiUrl));
           }
           catch(err) {
             throw err;
             console.log(err);
+          }
+          if(jwt != null){
+
+            const getLeaveLists = async() =>{
+               try{
+                 
+                   const response = await fetch(`${apiUrl}/api/leaves/leaves/user-by-leave`,{
+                     method: 'GET',
+                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
+                     // body: JSON.stringify({})
+                   });
+           
+                   // console.log(response);
+                   const result = await response.json();
+                   const leavesData = result.data;
+                   dispatch(setLeavelist(leavesData));
+                   }
+                   catch(err) {
+                     throw err;
+                     console.log(err);
+                   }
+                  
+               };
+               getLeaveLists();
+               const getData = async() =>{
+         
+                try{
+            
+                    const response = await fetch(`${apiUrl}/api/leaves/leave-type/list`,{ 
+                      method: 'GET',
+                      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
+                      // body: JSON.stringify({})
+                    });
+            
+                    // console.log(response);
+                    const result = await response.json();
+                    const leaves = result.data;
+                    
+                    dispatch(setLeavetype(leaves));
+                    }
+                    catch(err) {
+                      throw err;
+                      console.log(err);
+                    }
+                   
+                };
+                getData();
+                const getTasks = async() =>{
+               
+                  try{
+                    
+                      const response = await fetch(`${apiUrl}/api/reports/task/user-task-list`,{
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
+                        // body: JSON.stringify({})
+                      });
+              
+                      const taskResult = await response.json();
+                      const tasks = taskResult.data;
+                      dispatch(setTaskList(tasks));
+                      }
+                      catch(err) {
+                        throw err;
+                        console.log(err);
+                      }
+                     
+                  };
+                  
+                  getTasks();
+                  const getEvents = async() =>{
+                    try{
+                      
+                        const response = await fetch(`${apiUrl}/api/leaves/leaves/user-by-leave`,{
+                          method: 'GET',
+                          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
+                          // body: JSON.stringify({})
+                        });
+                
+                        // console.log(response);
+                        const result = await response.json();
+                        const leavesData = result.data;
+                        dispatch(setLeavelist(leavesData));
+                        }
+                        catch(err) {
+                          throw err;
+                          console.log(err);
+                        }
+                       
+                    };
+                    // getEvents();
+                  navigation.navigate('Dashboard');
+            
+          } else {
+            console.error('Not Signed in');
           }
          
       };
@@ -81,15 +176,13 @@ const SignIn: () => Node = ({navigation}) => {
      const userProfile = user.additionalUserInfo.profile;
      dispatch(setDetails(userProfile));
      dispatch(setToken(idToken));
-    if(jwt != null){
-      navigation.navigate('Dashboard');
-    } else {
-      console.error('Not Signed in');
-    }
+    // console.log('jwt2',jwt);
+
 
     }).catch((error)=>{
       console.log("sdgsdg",error)
     })
+
    }
 
    
