@@ -20,7 +20,8 @@ export default function Dashboard({ navigation }) {
   const [Enable , setEnable]  = useState(false);
   const [leaveId, setLeaveId] = useState(null)
   const apiUrl = data.appUrl;
-  const getLeaveLists = async() =>{
+  const getLeaveLists = async() =>{ 
+
    
     try{
       
@@ -146,7 +147,7 @@ useEffect(()=>{
           });
        
           const result = await response.json();
-          console.log('checkedin result',result);
+          // console.log('checkedin result',result);
           }
           catch(err) {
             throw err;

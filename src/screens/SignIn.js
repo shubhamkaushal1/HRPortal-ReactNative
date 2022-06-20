@@ -32,9 +32,9 @@ const SignIn: () => Node = ({navigation}) => {
    
    const signInWithGoogleAsync = async () => {
      // Get the users ID token
-   const { idToken } = await GoogleSignin.signIn();
+   const { idToken } = await GoogleSignin.signIn(); 
  
-   // Create a Google credential with the token
+   // Create a Google credential with the token 
    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
  
    // Sign-in the user with the credential')
@@ -47,12 +47,12 @@ const SignIn: () => Node = ({navigation}) => {
       email: user.additionalUserInfo.profile.email,
       firebase_token: idToken
     }
-    const apiUrl = 'https://6e4f-203-145-168-10.ngrok.io';
+    const apiUrl = 'http://192.168.1.13:3000';
     // dispatch(setAppUrl(apiUrl));
     
     if (idToken){
       const SignUp = async() =>{
-        console.log('ergr');
+        console.log('ergr',idToken);
 
         try{
           const response = await fetch(`${apiUrl}/api/sign-up`,{
@@ -82,6 +82,7 @@ const SignIn: () => Node = ({navigation}) => {
      dispatch(setDetails(userProfile));
      dispatch(setToken(idToken));
     if(jwt != null){
+      
       navigation.navigate('Dashboard');
     } else {
       console.error('Not Signed in');
