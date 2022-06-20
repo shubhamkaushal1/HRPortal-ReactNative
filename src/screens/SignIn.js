@@ -33,9 +33,9 @@ const SignIn: () => Node = ({navigation}) => {
    
    const signInWithGoogleAsync = async () => {
      // Get the users ID token
-   const { idToken } = await GoogleSignin.signIn();
+   const { idToken } = await GoogleSignin.signIn(); 
  
-   // Create a Google credential with the token
+   // Create a Google credential with the token 
    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
  
    // Sign-in the user with the credential')

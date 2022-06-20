@@ -15,11 +15,7 @@ export default function Leavelist({ navigation }) {
 
   return (
       <View>
-           <Button
-          title={`Go to `}
-          onPress={() => navigation.navigate(Applyleave)}
-        />
-    <LeaveListComponent />
-    </View>
+        <LeaveListComponent />
+      </View>
   );
 };

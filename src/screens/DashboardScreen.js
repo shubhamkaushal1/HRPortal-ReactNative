@@ -15,6 +15,7 @@ import ScrollingButtonMenu from 'react-native-scroll-menu';
 
 export default function Dashboard({ navigation }) {
   const data = useSelector(state => state.userReducer);
+  console.log(data);
   const dispatch = useDispatch();
   const [Enable , setEnable]  = useState(false);
   const [leaveId, setLeaveId] = useState(null)
@@ -94,7 +95,7 @@ export default function Dashboard({ navigation }) {
           {
             <View style={{flexDirection: "column"}}>
               <Text style={{width:'100%', fontSize:14, textAlign:"left", color: '#657785', fontFamily:'Proxima Nova,Semibold', fontWeight:"normal"}}>Full Day Application</Text>
-              <Text style={{fontSize:18, color: '#13171A', fontFamily:'Proxima Nova,Semibold', fontWeight: 'bold'}}>{u.formatedFromDate}</Text>
+              <Text style={{fontSize:18, color: '#13171A', fontFamily:'Proxima Nova,Semibold', fontWeight: 'bold'}}>{u.from_date}</Text>
               <Text style={{color: '#CB823B', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold'}}>{u.leave_type_name}</Text>
             </View>
         
