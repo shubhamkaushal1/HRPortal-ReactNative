@@ -10,6 +10,7 @@ import SignIn from './src/screens/SignIn';
 import Dashboard from './src/screens/DashboardScreen';
 import Attendence from './src/screens/AttendenceScreen';
 import LeaveApplyScreen from './src/screens/LeaveApplyScreen';
+import ReportSubmitScreen from './src/screens/ReportSubmitScreen';
 import LeaveScreen from './src/screens/LeavesScreen';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -46,7 +47,8 @@ export default function App() {
           <Drawer.Screen name="LeaveApplyScreen" component={LeaveApplyScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
           <Drawer.Screen name="Leaves" component={LeaveScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
           <Drawer.Screen name="Leave Details" component={LeaveDetails} options={{ headerShown: true,headerTitle:()=>null }}/>
-           
+          <Drawer.Screen name="Report Submit" component={ReportSubmitScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
+          
         </Drawer.Navigator>
     </NavigationContainer>
     </Provider>

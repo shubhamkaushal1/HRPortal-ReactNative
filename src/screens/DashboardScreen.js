@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet,ScrollView, Switch, Image} from 'react-native';
+import { View, Text, StyleSheet,ScrollView, Switch, Image,Modal} from 'react-native';
 import { State, TouchableOpacity } from 'react-native-gesture-handler';
 import firebase from 'firebase/compat/app';
 import auth from '@react-native-firebase/auth';
 import {LoggingOut} from "../api/firebaseMethods";
 import { useSelector, useDispatch } from 'react-redux';
 // import { setDetails, setToken, setAttendence,setLeavetype } from '../redux/actions/useractions';
-import { setDetails, setToken, setJWT,setLeavetype,setLeavelist } from '../redux/actions/useractions';
+import { setDetails, setToken, setJWT,setLeavetype,setLeavelist,setTaskList,setReportId } from '../redux/actions/useractions';
 import ToggleSwitch from 'rn-toggle-switch';
 import { Card,Button } from 'react-native-elements';
 import Santa from "../Img/santa.svg";
@@ -15,62 +15,37 @@ import ScrollingButtonMenu from 'react-native-scroll-menu';
 
 export default function Dashboard({ navigation }) {
   const data = useSelector(state => state.userReducer);
+  console.log(data);
   const dispatch = useDispatch();
-  console.log('dashboard',data.leavelist);
   const [Enable , setEnable]  = useState(false);
   const [leaveId, setLeaveId] = useState(null)
-  const apiUrl = data.appUrl;
-  const getLeaveLists = async() =>{ 
+  // const apiUrl = data.appUrl;
+  const ViewDetails = (e,id) =>{
+    // setLeaveDetailId(id)
+    console.log(id);
+    dispatch(setReportId(id));
+    console.log('ddd');
 
-   
-    try{
+  //   const getDetails = async() =>{
+  //   try{
+    
+  //     const responseData = await fetch(`${apiUrl}/api/leaves/leaves/view?id=${id}`,{
+  //       method: 'GET',
+  //       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${data.jwt}` },
+  //       // body: JSON.stringify({})
+  //     });
+  //     const resultData = await responseData.json();
+
+  //     dispatch(setLeaveDetails(resultData.data));
       
-        const response = await fetch(`${apiUrl}/api/leaves/leaves/user-by-leave`,{
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${data.jwt}` },
-          // body: JSON.stringify({})
-        });
-
-        // console.log(response);
-        const result = await response.json();
-        const leavesData = result.data;
-        dispatch(setLeavelist(leavesData));
-        }
-        catch(err) {
-          throw err;
-          console.log(err);
-        }
-       
-    };
-
-  const getData = async() =>{
-   
-    try{
-      
-        const response = await fetch(`${apiUrl}/api/leaves/leave-type/list`,{
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${data.jwt}` },
-          // body: JSON.stringify({})
-        });
-
-        // console.log(response);
-        const result = await response.json();
-        const leaves = result.data;
-        
-        dispatch(setLeavetype(leaves));
-        }
-        catch(err) {
-          throw err;
-          console.log(err);
-        }
-       
-    };
-useEffect(()=>{
-  getData();
-  getLeaveLists();
-
-
-},[])
+  //     }
+  //     catch(err) {
+  //       throw err;
+  //       console.log(err);
+  //     }
+  // }
+  // getDetails();
+}
   const handleLeaveData = (leavedata) =>{
     setLeaveId(leavedata.id)
   }
@@ -120,7 +95,7 @@ useEffect(()=>{
           {
             <View style={{flexDirection: "column"}}>
               <Text style={{width:'100%', fontSize:14, textAlign:"left", color: '#657785', fontFamily:'Proxima Nova,Semibold', fontWeight:"normal"}}>Full Day Application</Text>
-              <Text style={{fontSize:18, color: '#13171A', fontFamily:'Proxima Nova,Semibold', fontWeight: 'bold'}}>{u.formatedFromDate}</Text>
+              <Text style={{fontSize:18, color: '#13171A', fontFamily:'Proxima Nova,Semibold', fontWeight: 'bold'}}>{u.from_date}</Text>
               <Text style={{color: '#CB823B', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold'}}>{u.leave_type_name}</Text>
             </View>
         
@@ -134,7 +109,50 @@ useEffect(()=>{
     );
   
   }
-  console.log('this',Enable);
+ 
+  const taskList = () => {
+
+        
+    const tList = data.tasklist;
+    
+    // console.log('users');
+    return ( 
+   
+      <View>
+        {
+      tList.map((t, i) => {
+        return (
+          <View style={{flexDirection: "row"}}>
+          
+                  <Card width={348} height={54} borderRadius={4} containerStyle={{elevation:0.5,backgroundColor:'#FFF',marginLeft: 1, borderColor:'#DBDBDB'}} >
+                    {
+                      <View style={{flexDirection: "row", justifyContent:'space-between'}}>
+                          <Text style={{fontSize:16, fontFamily:'Proxima Nova, Regular'}}>{t.title}</Text>
+                          <Button 
+                            title="Report"
+                            buttonStyle={{ backgroundColor: '#1DA1F2' }}
+                            containerStyle={{
+                              width: 72,
+                              height:36,
+                              marginTop:-5,
+                              borderRadius: 30,
+                              
+                            }}
+                            onPress={(e) => ViewDetails(e,t.id)}
+                            titleStyle={{ color: '#E1F3FF', fontFamily:'Proxima Nova,Semibold', fontSize: 14 }}
+                          />
+                      </View>
+                    }
+                  </Card>
+                </View>
+);
+})
+}
+      </View>
+    
+    );
+  
+  }
   
   if(Enable == true){
     
@@ -147,7 +165,6 @@ useEffect(()=>{
           });
        
           const result = await response.json();
-          // console.log('checkedin result',result);
           }
           catch(err) {
             throw err;
@@ -168,7 +185,6 @@ useEffect(()=>{
           });
        
           const result = await response.json();
-          console.log('checkedin result',result);
           }
           catch(err) {
             throw err;
@@ -201,67 +217,11 @@ useEffect(()=>{
               <View>
               <View style={{flexDirection: "row", marginTop:-20, marginLeft:-20 }}>
               {leaveTypeLabel()}
-              
-                {/* <Button 
-                  title="Casual"
-                  buttonStyle={{ backgroundColor: '#FCEFE3' }}
-                  containerStyle={{
-                    width: 80,
-                    height:35,
-                    borderRadius: 20,
-                    marginHorizontal: 5,
-                  }}
-                  titleStyle={{ color: '#CB823B', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold' }}
-                />
-                <Button 
-                  title="Sick"
-                  buttonStyle={{ backgroundColor: '#D4EEFF' }}
-                  containerStyle={{
-                    width: 80,
-                    height:35,
-                    borderRadius: 20,
-                    marginHorizontal: 5,
-                  }}
-                  titleStyle={{ color: '#024E7D', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold' }}
-                />
-                <Button 
-                  title="Short"
-                  buttonStyle={{ backgroundColor: '#DFDAEB' }}
-                  containerStyle={{
-                    width: 80,
-                    height:35,
-                    borderRadius: 30,
-                    marginHorizontal: 5,
-                  }}
-                  titleStyle={{ color: '#492596', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold' }}
-                /> */}
               </View>
-              {/* <View style={{flexDirection: "row"}}> */}
-                {/* <Card width={164} height={91} borderRadius={5} containerStyle={{elevation:0.5,backgroundColor:'#F8F8F8',marginLeft: 1}} >
-                  {
-                    <View style={{flexDirection: "column"}}>
-                      <Text style={{width:'100%', fontSize:14, textAlign:"left", color: '#657785', fontFamily:'Proxima Nova,Semibold', fontWeight:"normal"}}>Full Day Application</Text>
-                      <Text style={{fontSize:18, color: '#13171A', fontFamily:'Proxima Nova,Semibold', fontWeight: 'bold'}}>Wed, 16 Dec</Text>
-                      <Text style={{color: '#CB823B', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold'}}>Casual</Text>
-                    </View>
-                
-                  }
-                </Card>
-                <Card width={164} height={91} borderRadius={5} containerStyle={{elevation:0.5,backgroundColor:'#F8F8F8',marginLeft: 1}} >
-                  {
-                    <View style={{flexDirection: "column"}}>
-                      <Text style={{width:'100%', fontSize:14, textAlign:"left", color: '#657785', fontFamily:'Proxima Nova,Semibold', fontWeight:"normal"}}>Full Day Application</Text>
-                      <Text style={{fontSize:18, color: '#13171A', fontFamily:'Proxima Nova,Semibold', fontWeight: 'bold'}}>Wed, 16 Dec</Text>
-                      <Text style={{color: '#CB823B', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold'}}>Casual</Text>
-                    </View>
-                
-                  }
-                </Card> */}
+             
                 <ScrollView horizontal={true}>
                 {leaveLists()}
                 </ScrollView>
-                
-              {/* </View> */}
               </View>
               
             }
@@ -269,49 +229,10 @@ useEffect(()=>{
         </View>
         <View style={[styles.topContainer]}>
           <Card width={380} height={212} borderRadius={4} containerStyle={{elevation:0}} >
-            <Card.Title style={{width:'100%', fontSize:20,textAlign:"left"}}>Today Task </Card.Title>
+            <Card.Title style={{width:'100%', fontSize:20,textAlign:"left"}}>Today's Task </Card.Title>
             {
               <View>
-                <View style={{flexDirection: "row"}}>
-                  <Card width={348} height={54} borderRadius={4} containerStyle={{elevation:0.5,backgroundColor:'#FFF',marginLeft: 1, borderColor:'#DBDBDB'}} >
-                    {
-                      <View style={{flexDirection: "row", justifyContent:'space-between'}}>
-                          <Text style={{fontSize:16, fontFamily:'Proxima Nova, Regular'}}>Login Page Functionality</Text>
-                          <Button 
-                            title="Report"
-                            buttonStyle={{ backgroundColor: '#1DA1F2' }}
-                            containerStyle={{
-                              width: 72,
-                              height:36,
-                              marginTop:-5,
-                              borderRadius: 30,
-                            }}
-                            titleStyle={{ color: '#E1F3FF', fontFamily:'Proxima Nova,Semibold', fontSize: 14 }}
-                          />
-                      </View>
-                    }
-                  </Card>
-                </View>
-                <View style={{flexDirection: "row"}}>
-                  <Card width={348} height={54} borderRadius={4} containerStyle={{elevation:0.5,backgroundColor:'#FFF',marginLeft: 1, borderColor:'#DBDBDB'}} >
-                    {
-                      <View style={{flexDirection: "row", justifyContent:'space-between'}}>
-                          <Text style={{fontSize:16, fontFamily:'Proxima Nova, Regular'}}>Login Page Functionality</Text>
-                          <Button 
-                            title="Report"
-                            buttonStyle={{ backgroundColor: '#1DA1F2' }}
-                            containerStyle={{
-                              width: 72,
-                              height:36,
-                              marginTop:-5,
-                              borderRadius: 30,
-                            }}
-                            titleStyle={{ color: '#E1F3FF', fontFamily:'Proxima Nova,Semibold', fontSize: 14 }}
-                          />
-                      </View>
-                    }
-                  </Card>
-                </View>
+              {taskList()}
               </View>
               
             }
