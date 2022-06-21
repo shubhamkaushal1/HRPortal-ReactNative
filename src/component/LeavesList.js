@@ -113,9 +113,9 @@ export default function LeaveListComponent({ navigation }) {
                     <Text style={{fontFamily:'Proxima Nova', fontSize: 16, color: '#000', fontWeight: 'bold'}}>From</Text>
                     </View>
                     <View style={{fontFamily:'Proxima Nova', fontSize: 12, color: '#000', marginHorizontal:20,flexDirection: "row"}}>
-                      <Text style={styles.dateContainer} > {u.formatedFromDate}</Text>
+                      <Text style={styles.dateContainer} > {u.from_date}</Text>
                       <Text style={{marginTop: 2}}> To </Text>
-                      <Text style={styles.dateContainer} > {u.formatedToDate} </Text>
+                      <Text style={styles.dateContainer} > {u.to_date} </Text>
                     </View>
                   </View> 
                   <View style={{marginLeft:55, marginTop: 15}}>
