@@ -8,7 +8,9 @@ export const SET_USER_LEAVE_TYPES = 'SET_USER_LEAVE_TYPES';
 export const SET_APP_URL = 'SET_APP_URL';
 export const SET_LEAVE_LIST = 'SET_LEAVE_LIST';
 export const SET_LEAVE_DETAIL_ID = 'SET_LEAVE_DETAIL_ID';
+export const SET_REPORT_ID = 'SET_REPORT_ID';
 export const SET_LEAVE_DETAILS = 'SET_LEAVE_DETAILS';
+export const SET_TASK_LIST = 'SET_TASK_LIST';
 
 
 export const setDetails = details => dispatch => {
@@ -54,6 +56,13 @@ export const setLeaveDetailId = leave_detail_id => dispatch => {
         payload: leave_detail_id,
     });
 };
+export const setReportId = report_id => dispatch => {
+    dispatch({
+        type: SET_REPORT_ID,
+        payload: report_id,
+    });
+};
+
 export const setLeaveDetails = leave_details => dispatch => {
     dispatch({
         type: SET_LEAVE_DETAILS,
@@ -64,5 +73,11 @@ export const setLeavelist = leavelist => dispatch => {
     dispatch({
         type: SET_LEAVE_LIST,
         payload: leavelist,
+    });
+};
+export const setTaskList = tasklist => dispatch => {
+    dispatch({
+        type: SET_TASK_LIST,
+        payload: tasklist,
     });
 };
