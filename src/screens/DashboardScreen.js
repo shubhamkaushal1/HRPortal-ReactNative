@@ -6,7 +6,7 @@ import auth from '@react-native-firebase/auth';
 import {LoggingOut} from "../api/firebaseMethods";
 import { useSelector, useDispatch } from 'react-redux';
 // import { setDetails, setToken, setAttendence,setLeavetype } from '../redux/actions/useractions';
-import { setDetails, setToken, setJWT,setLeavetype,setLeavelist,setTaskList,setReportId } from '../redux/actions/useractions';
+import { setDetails, setToken, setJWT,setLeavetype,setLeavelist,setTaskList,setReportId,setTaskReport } from '../redux/actions/useractions';
 import ToggleSwitch from 'rn-toggle-switch';
 import { Card,Button } from 'react-native-elements';
 import Santa from "../Img/santa.svg";
@@ -20,10 +20,13 @@ export default function Dashboard({ navigation }) {
   const [Enable , setEnable]  = useState(false);
   const [leaveId, setLeaveId] = useState(null)
   // const apiUrl = data.appUrl;
-  const ViewDetails = (e,id) =>{
+  const ViewDetails = (e,id,taskname) =>{
     // setLeaveDetailId(id)
     console.log(id);
+    console.log(taskname);
     dispatch(setReportId(id));
+    dispatch(setTaskReport(taskname));
+    
     console.log('ddd');
 
   //   const getDetails = async() =>{
@@ -138,7 +141,7 @@ export default function Dashboard({ navigation }) {
                               borderRadius: 30,
                               
                             }}
-                            onPress={(e) => ViewDetails(e,t.id)}
+                            onPress={(e) => ViewDetails(e,t.id,t.title)}
                             titleStyle={{ color: '#E1F3FF', fontFamily:'Proxima Nova,Semibold', fontSize: 14 }}
                           />
                       </View>
