@@ -19,7 +19,7 @@ import {
 
 import 'firebase/compat/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { setDetails, setToken, setJWT, setAppUrl,setLeavetype,setLeavelist,setTaskList } from '../redux/actions/useractions';
+import { setDetails, setToken, setJWT, setAppUrl,setLeavetype,setLeavelist,setTaskList,setAnnoucementList,setTaskReport } from '../redux/actions/useractions';
 
 
 const SignIn: () => Node = ({navigation}) => {
@@ -163,6 +163,52 @@ const SignIn: () => Node = ({navigation}) => {
                        
                     };
                     // getEvents();
+
+                    const getAnnoucement = async() =>{
+                      try{
+                        
+                          const response = await fetch(`${apiUrl}/api/events/announcements/list`,{
+                            method: 'GET',
+                            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
+                            // body: JSON.stringify({})
+                          });
+                  
+                          // console.log(response);
+                          const result = await response.json();
+                          const annoucementData = result.data;
+                          dispatch(setAnnoucementList(annoucementData));
+                          }
+                          catch(err) {
+                            throw err;
+                            console.log(err);
+                          }
+                         
+                      };
+                      getAnnoucement();
+
+                      const taskHistory = async() =>{
+                        try{
+                          
+                            const response = await fetch(`${apiUrl}/api/reports/task/dially-user-list`,{
+                              method: 'GET',
+                              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
+                              // body: JSON.stringify({})
+                            });
+                    
+                            // console.log(response);
+                            const result = await response.json();
+                            const taskData = result.data;
+                            dispatch(setTaskReport(taskData));
+                            console.log('shubham',taskData);
+                            }
+                            catch(err) {
+                              throw err;
+                              console.log(err);
+                            }
+                           
+                        };
+                        taskHistory();
+
                   navigation.navigate('Dashboard');
             
           } else {

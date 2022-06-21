@@ -15,6 +15,7 @@ import { setReportId } from '../redux/actions/useractions';
  import Dashboard from '../screens/DashboardScreen'
 //  import FlashMessage from "react-native-flash-message";
  import { showMessage, hideMessage } from "react-native-flash-message";
+import data from 'react-native-ico-material-design/src/data';
  const SubmitReportScreen = (navigation) => {
    
     const dispatch = useDispatch();
@@ -66,10 +67,12 @@ import { setReportId } from '../redux/actions/useractions';
         }
     return(
         <View>
+          <Text>{datas.report_name}</Text>
     <TextInput placeholder="Type something" numberOfLines={4} multiline={true}  onChangeText={description => {
       setDescription(description);
       // setIsFocus(false);
     }}/>
+    
     <View>
     <TextInput placeholder="Working Hours"  multiline={true}  onChangeText={hours => {
       setWorkingHours(hours);
