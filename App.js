@@ -21,7 +21,8 @@ import SplashScreen from  "react-native-splash-screen";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import LeaveDetails from './src/screens/LeaveDetailsScreen';
 import AnnouncementScreen from './src/screens/AnnouncementScreen';
-import TaskHistoryScreen from './src/screens/TaskHistoryScreen'
+import TaskHistoryScreen from './src/screens/TaskHistoryScreen';
+import EventsScreen from './src/screens/EventsScreen';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -52,6 +53,8 @@ export default function App() {
           <Drawer.Screen name="Report Submit" component={ReportSubmitScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
           <Drawer.Screen name="Announcement" component={AnnouncementScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
           <Drawer.Screen name="Tasks History" component={TaskHistoryScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
+          <Drawer.Screen name="Events" component={EventsScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
+          
           
           
         </Drawer.Navigator>
