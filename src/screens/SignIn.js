@@ -49,7 +49,7 @@ const SignIn: () => Node = ({navigation}) => {
       email: user.additionalUserInfo.profile.email,
       firebase_token: idToken
     }
-    const apiUrl = 'http://192.168.1.13:3000';
+    const apiUrl = 'http://hr.bootesnull.com:3000';
     let jwt;
     dispatch(setAppUrl(apiUrl));
     if (idToken){
