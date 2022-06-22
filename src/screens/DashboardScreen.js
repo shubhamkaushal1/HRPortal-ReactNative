@@ -6,7 +6,7 @@ import auth from '@react-native-firebase/auth';
 import {LoggingOut} from "../api/firebaseMethods";
 import { useSelector, useDispatch } from 'react-redux';
 // import { setDetails, setToken, setAttendence,setLeavetype } from '../redux/actions/useractions';
-import { setDetails, setToken, setJWT,setLeavetype,setLeavelist,setTaskList,setReportId,setTaskReport } from '../redux/actions/useractions';
+import { setDetails, setToken, setJWT,setLeavetype,setLeavelist,setTaskList,setReportId,setTaskReport,setReportName } from '../redux/actions/useractions';
 import ToggleSwitch from 'rn-toggle-switch';
 import { Card,Button } from 'react-native-elements';
 import Santa from "../Img/santa.svg";
@@ -25,7 +25,7 @@ export default function Dashboard({ navigation }) {
     console.log(id);
     console.log(taskname);
     dispatch(setReportId(id));
-    dispatch(setTaskReport(taskname));
+    dispatch(setReportName(taskname));
     
     console.log('ddd');
 

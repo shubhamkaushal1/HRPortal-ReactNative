@@ -1,4 +1,4 @@
-import { SET_TASK_REPORT,SET_REPORT_NAME,SET_ANNOUCEMENT_DETAILS,SET_REPORT_ID,SET_TASK_LIST,SET_USER_ATTENDENCE, SET_USER_DETAILS, SET_USER_TOKEN, SET_USER_JWT,SET_USER_LEAVE_TYPES,SET_APP_URL,SET_LEAVE_LIST,SET_LEAVE_DETAIL_ID,SET_LEAVE_DETAILS } from '../actions/useractions';
+import {SET_EVENT_LIST,SET_TASK_REPORT,SET_REPORT_NAME,SET_ANNOUCEMENT_DETAILS,SET_REPORT_ID,SET_TASK_LIST,SET_USER_ATTENDENCE, SET_USER_DETAILS, SET_USER_TOKEN, SET_USER_JWT,SET_USER_LEAVE_TYPES,SET_APP_URL,SET_LEAVE_LIST,SET_LEAVE_DETAIL_ID,SET_LEAVE_DETAILS } from '../actions/useractions';
 
 const initialState = {
     details: {},
@@ -7,6 +7,7 @@ const initialState = {
     tasklist: [],
     taskReport:[],
     annoucementList:[],
+    eventList:[],
     leave_details: {},
     token: '',
     jwt: '',
@@ -42,6 +43,9 @@ function userReducer(state = initialState, action) {
             return { ...state, leavelist: [...action.payload]};
         case SET_ANNOUCEMENT_DETAILS:
             return { ...state, annoucementList: [...action.payload]};
+        case SET_EVENT_LIST:
+                return { ...state, eventList: [...action.payload]};      
+            
         case SET_TASK_REPORT:
                 return { ...state, taskReport: [...action.payload]};
             

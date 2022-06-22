@@ -14,6 +14,8 @@ export const SET_LEAVE_DETAILS = 'SET_LEAVE_DETAILS';
 export const SET_TASK_LIST = 'SET_TASK_LIST';
 export const SET_ANNOUCEMENT_DETAILS = 'SET_ANNOUCEMENT_DETAILS';
 export const SET_TASK_REPORT = 'SET_TASK_REPORT';
+export const SET_EVENT_LIST = 'SET_EVENT_LIST';
+
 
 
 export const setDetails = details => dispatch => {
@@ -81,6 +83,12 @@ export const setAnnoucementList = annoucementList => dispatch => {
     dispatch({
         type: SET_ANNOUCEMENT_DETAILS,
         payload: annoucementList,
+    });
+};
+export const setEventsList = eventList => dispatch => {
+    dispatch({
+        type: SET_EVENT_LIST,
+        payload: eventList,
     });
 };
 export const setTaskReport = taskReport => dispatch => {
