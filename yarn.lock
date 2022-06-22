@@ -5601,7 +5601,7 @@
   "resolved" "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
   "version" "4.1.1"
 
-"lodash@*", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.21":
+"lodash@*", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.21", "lodash@^4.17.4":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
@@ -6095,7 +6095,7 @@
   dependencies:
     "minimist" "^1.2.6"
 
-"moment@^2.29.3":
+"moment@^2.18.1", "moment@^2.29.3":
   "integrity" "sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw=="
   "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.3.tgz"
   "version" "2.29.3"
@@ -6830,6 +6830,14 @@
     "opencollective-postinstall" "^2.0.3"
     "react-native-ratings" "8.0.4"
     "react-native-size-matters" "^0.3.1"
+
+"react-native-events-calendar@^1.0.8":
+  "integrity" "sha512-2jMFWaNLA45+6qe230WpxZ1+DtrvlvW8XWCIhUzJ3rejiulKTNrc55QPM+Xm+cpZH2gRGfSykyJwY1XzDZgj/A=="
+  "resolved" "https://registry.npmjs.org/react-native-events-calendar/-/react-native-events-calendar-1.0.8.tgz"
+  "version" "1.0.8"
+  dependencies:
+    "lodash" "^4.17.4"
+    "moment" "^2.18.1"
 
 "react-native-flash-message@^0.2.1":
   "integrity" "sha512-jVLIygLSBEl+GZur6wyxLtla/v8dUAy1dPVwDpjAiGg9D4D5gvkdE7ZGJ9hY9svVriF464mgNi3qXQ9AP/+pNg=="
