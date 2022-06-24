@@ -19,7 +19,7 @@ import {
 
 import 'firebase/compat/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { setDetails, setToken, setJWT, setAppUrl,setLeavetype,setLeavelist,setTaskList,setAnnoucementList,setTaskReport } from '../redux/actions/useractions';
+import { setDetails, setToken, setJWT, setAppUrl,setLeavetype,setLeavelist,setTaskList,setAnnoucementList,setTaskReport,setEventsList } from '../redux/actions/useractions';
 
 
 const SignIn: () => Node = ({navigation}) => {
@@ -145,7 +145,7 @@ const SignIn: () => Node = ({navigation}) => {
                   const getEvents = async() =>{
                     try{
                       
-                        const response = await fetch(`${apiUrl}/api/leaves/leaves/user-by-leave`,{
+                        const response = await fetch(`${apiUrl}/api/events/events/list`,{
                           method: 'GET',
                           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
                           // body: JSON.stringify({})
@@ -153,8 +153,8 @@ const SignIn: () => Node = ({navigation}) => {
                 
                         // console.log(response);
                         const result = await response.json();
-                        const leavesData = result.data;
-                        dispatch(setLeavelist(leavesData));
+                        const eventList = result.data;
+                        dispatch(setEventsList(eventList));
                         }
                         catch(err) {
                           throw err;
@@ -162,7 +162,7 @@ const SignIn: () => Node = ({navigation}) => {
                         }
                        
                     };
-                    // getEvents();
+                    getEvents();
 
                     const getAnnoucement = async() =>{
                       try{
