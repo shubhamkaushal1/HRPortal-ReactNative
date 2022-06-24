@@ -29,25 +29,6 @@ export default function Dashboard({ navigation }) {
     
     console.log('ddd');
 
-  //   const getDetails = async() =>{
-  //   try{
-    
-  //     const responseData = await fetch(`${apiUrl}/api/leaves/leaves/view?id=${id}`,{
-  //       method: 'GET',
-  //       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${data.jwt}` },
-  //       // body: JSON.stringify({})
-  //     });
-  //     const resultData = await responseData.json();
-
-  //     dispatch(setLeaveDetails(resultData.data));
-      
-  //     }
-  //     catch(err) {
-  //       throw err;
-  //       console.log(err);
-  //     }
-  // }
-  // getDetails();
 }
   const handleLeaveData = (leavedata) =>{
     setLeaveId(leavedata.id)

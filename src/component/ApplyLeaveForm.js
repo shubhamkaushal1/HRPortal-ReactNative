@@ -68,7 +68,7 @@ import DocumentPicker from 'react-native-document-picker';
     return ( 
      <View style={{marginTop:15}}>
       <View>
-        <Text style={{fontSize:16, fontWeight:'600'}}>Type</Text>
+        <Text style={{fontSize:16, fontWeight:'600', color:'#13171A'}}>Type</Text>
       </View>
       <View>
         <Dropdown
@@ -134,7 +134,7 @@ import DocumentPicker from 'react-native-document-picker';
         return (
           <View style={{backgroundColor:'#F4F5F7', marginTop:15, paddingVertical:12,}}>
             <View style={{paddingHorizontal:12}}>
-              <Text>Reason</Text>
+              <Text style={{color:'#024E7D'}}>Reason</Text>
               <TextInput numberOfLines={4} multiline={true} />
             </View>
             <View style={{paddingHorizontal:12}}>
@@ -158,9 +158,9 @@ import DocumentPicker from 'react-native-document-picker';
           <View style={styles.sectionStyle}>
             <View style={{flexDirection:'column'}}>
             <View>
-              <Text style={{fontSize:16, fontWeight:'600'}}>From</Text>
+              <Text style={{fontSize:16, fontWeight:'600', color:'#13171A'}}>From</Text>
             </View>
-            <View style={{flexDirection:'row', borderWidth:0.5, borderRadius:2, width:150, height:35, paddingHorizontal:10}}>
+            <View style={{flexDirection:'row', borderWidth:0.5, borderRadius:2, borderColor:'#DBDBDB', width:150, height:35, paddingHorizontal:10}}>
               <FontAwesomeIcon icon={faCalendarAlt} size={16} style={{ color: "#657785", paddingVertical:18 }} />
               <TextInput
                 placeholder="To"
@@ -173,9 +173,9 @@ import DocumentPicker from 'react-native-document-picker';
             </View>
             <View style={{flexDirection:'column'}}>
             <View>
-              <Text style={{fontSize:16, fontWeight:'600'}}>To</Text>
+              <Text style={{fontSize:16, fontWeight:'600', color:'#13171A'}}>To</Text>
             </View>
-            <View style={{flexDirection:'row', borderWidth:0.5, borderRadius:2, width:150, height:35, paddingHorizontal:10}}>
+            <View style={{flexDirection:'row', borderWidth:0.5, borderRadius:2, borderColor:'#DBDBDB', width:150, height:35, paddingHorizontal:10}}>
               <FontAwesomeIcon icon={faCalendarAlt} size={16} style={{ color: "#657785", paddingVertical:18 }} />
               <TextInput
                 placeholder="From"
@@ -249,7 +249,7 @@ import DocumentPicker from 'react-native-document-picker';
       color:'#657785',
       borderColor: '#DBDBDB',
       borderWidth: 0.5,
-      borderRadius: 8,
+      borderRadius: 4,
       paddingHorizontal: 8,
     },
     icon: {
