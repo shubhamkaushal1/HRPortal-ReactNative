@@ -4,11 +4,12 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import {setLeavelist,setLeaveDetailId,setLeaveDetails } from '../redux/actions/useractions';
 import { Card, ListItem, Button, Header } from 'react-native-elements';
-import Applyleave from '../screens/LeaveApplyScreen';
+// import LeaveApplyScreen from '../screens/LeaveApplyScreen';
 import Pending from "../../assets/Pending.svg";
 import Approved from "../../assets/Approved.svg";
 import Rejected from "../../assets/Rejected.svg";
-
+import Toast from 'react-native-toast-message';
+import { createStackNavigator } from '@react-navigation/stack';
 export default function LeaveListComponent({ navigation }) {
     const dispatch = useDispatch();
     const data = useSelector(state => state.userReducer);
@@ -51,7 +52,7 @@ export default function LeaveListComponent({ navigation }) {
                 buttonStyle={{ backgroundColor: '#23B33A' }}
                 titleStyle={{ color: '#FFFFFF', fontFamily:'Proxima Nova,Semibold', fontSize: 14, fontWeight: 'bold'}}
                 containerStyle={{ width: 130, height:35, borderRadius: 20 }}
-                onPress={() => navigation.navigate(Applyleave)}
+                onPress={() => navigation.navigate('LeaveApplyScreen')}
               />
             </View>
           <View>

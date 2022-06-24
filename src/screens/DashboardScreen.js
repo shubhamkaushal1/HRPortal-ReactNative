@@ -22,12 +22,10 @@ export default function Dashboard({ navigation }) {
   // const apiUrl = data.appUrl;
   const ViewDetails = (e,id,taskname) =>{
     // setLeaveDetailId(id)
-    console.log(id);
-    console.log(taskname);
     dispatch(setReportId(id));
     dispatch(setReportName(taskname));
     
-    console.log('ddd');
+    navigation.navigate('Report Submit');
 
   //   const getDetails = async() =>{
   //   try{

@@ -11,7 +11,7 @@ import { useSelector, useDispatch, setAttendence } from 'react-redux';
 // Import Document Picker
 import DocumentPicker from 'react-native-document-picker';
 
-const LeaveApplyScreen = () => {
+const LeaveApplyScreen = (navigation) => {
   const datass = useSelector(state => state.userReducer);
   const apiUrl = datass.appUrl;
   const [singleFile, setSingleFile] = useState(null);

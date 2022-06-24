@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setDetails, setToken, setAttendence,setLeaveDetails } from '../redux/actions/useractions';
 import { Card, ListItem, Button, Icon,Header } from 'react-native-elements';
 import Pending from "../../assets/Pending.svg";
-
-const LeaveDetails = () => {
+import Toast from 'react-native-toast-message';
+const LeaveDetails = (navigation) => {
+  
   const [revoke, setRevoke] = useState(true);
   const dispatch = useDispatch();
   const data = useSelector(state => state.userReducer);
@@ -45,7 +46,10 @@ const LeaveDetails = () => {
         });
         
         const xxx = await responsedata.json();
-        console.log(xxx);
+        Toast.show({
+          type: 'success',
+          text2: 'Leave revoked Successfuly'
+        });
         // dispatch(setLeaveDetails(result.data));
         
         }

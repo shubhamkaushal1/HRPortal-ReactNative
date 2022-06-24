@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { View, Switch, StyleSheet, Text,Dimensions,SafeAreaView } from "react-native";
+import { View, Switch, StyleSheet, Text,Dimensions,SafeAreaView,Toast } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import { LoggingOut } from "../api/firebaseMethods";
 import { setDetails, setToken, setAttendence } from '../redux/actions/useractions';
 import { Card, ListItem, Button, Header } from 'react-native-elements';
 import Moment from 'moment';
 import EventCalendar from 'react-native-events-calendar';
+// import Toast from 'react-native-toast-message'
+// import Toast from 'react-native-simple-toast';
 let {width} = Dimensions.get('window');
 const EventsScreen = () => {
+  
   Moment.locale('en');
   const data = useSelector(state => state.userReducer);
-  console.log('ddddddddddaaaaaaaaaa',data.eventList);
   var eventss = data.eventList;
   var finalObj = [];
   for(var i = 0; i < eventss.length; i++){
@@ -18,7 +20,6 @@ const EventsScreen = () => {
     var endDate = Moment(eventss[i].holiday_to_date).format('y-MM-DD HH:MM:ss');
     var name = eventss[i].events_title;
     var eventInfo = eventss[i].events_descriptions;
-    console.log('yo',name);
     finalObj[i] = {
       start:startDate,
       end: endDate,
@@ -26,37 +27,7 @@ const EventsScreen = () => {
       summary:eventInfo
     }
      }
-     var dummy =[{
-      start: '2020-01-01 00:00:00',
-      end: '2020-01-01 02:00:00',
-      title: 'New Year Party',
-      summary: 'xyz Location',
-    },
-    {
-      start: '2020-01-01 01:00:00',
-      end: '2020-01-01 02:00:00',
-      title: 'New Year Wishes',
-      summary: 'Call to every one',
-    },
-    {
-      start: '2020-01-02 00:30:00',
-      end: '2020-01-02 01:30:00',
-      title: 'Parag Birthday Party',
-      summary: 'Call him',
-    },
-    {
-      start: '2020-01-03 01:30:00',
-      end: '2020-01-03 02:20:00',
-      title: 'My Birthday Party',
-      summary: 'Lets Enjoy',
-    },
-    {
-      start: '2020-02-04 04:10:00',
-      end: '2020-02-04 04:40:00',
-      title: 'Engg Expo 2020',
-      summary: 'Expoo Vanue not confirm',
-    },]
-     console.log('finalObj',finalObj);
+
     const [events, setEvents] = useState(
       finalObj
       
@@ -65,7 +36,12 @@ const EventsScreen = () => {
       const eventClicked = (event) => {
         //On Click of event showing alert from here
         alert(JSON.stringify(event.summary));
-        console.log('xxxxxxxx',event);
+        // Toast.show({
+        //   type: 'success',
+        //   text1: 'Hello',
+        //   text2: 'This is some something 👋'
+        // });
+
       };
      
       return (
@@ -101,4 +77,5 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    buttonStyle: { backgroundColor: "#000000" },
   });
