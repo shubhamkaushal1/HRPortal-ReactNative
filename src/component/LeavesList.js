@@ -11,6 +11,7 @@ import Rejected from "../../assets/Rejected.svg";
 import Toast from 'react-native-toast-message';
 import { createStackNavigator } from '@react-navigation/stack';
 export default function LeaveListComponent({ navigation }) {
+  
     const dispatch = useDispatch();
     const data = useSelector(state => state.userReducer);
     const apiUrl = data.appUrl;
@@ -62,7 +63,6 @@ export default function LeaveListComponent({ navigation }) {
               let ftColor ;
               let statusIcon ;
               let leaveStatus = u.leave_status;
-              console.log("unstoppable",u.leave_status);
                 switch (leaveStatus) {
                   case 'Pending':
                     bgColor = '#FFFCF9';

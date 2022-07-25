@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { View, Switch, StyleSheet, Text, FlatList,TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
-import { LoggingOut } from "../api/firebaseMethods";
-import { setDetails, setToken, setAttendence } from '../redux/actions/useractions';
 import { Card, ListItem, Button, Header } from 'react-native-elements';
 import Moment from 'moment';
 import { Dropdown } from "react-native-element-dropdown";
@@ -10,11 +8,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
  faBullhorn,
 } from "@fortawesome/free-solid-svg-icons";
-
+import {AnnoucementApi} from '../api/apis'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const AnnouncementScreen = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const data = useSelector(state => state.userReducer);
   const [selectedId, setSelectedId] = useState(null);
+  const [annoucementList, setAnnoucementList] = useState([]);
   // const [filter, setFilter] = useState(null);
 
   // const filterData = [
@@ -25,8 +25,20 @@ const AnnouncementScreen = () => {
   // const { details, token } = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
   Moment.locale('en');
-  const annoucementData = data.annoucementList;
-  
+  const annoucementData = annoucementList;
+  const displayData = async () => {
+    try {
+      let jwtToken = await AsyncStorage.getItem('jwtToken');
+      AnnoucementApi(jwtToken,setAnnoucementList);
+    }
+    catch (error) {
+      alert(error)
+    }
+  }
+    useEffect(() => {
+      displayData();
+
+    }, [])
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
       <View style={{flexDirection:'row', borderBottomWidth:1, borderBottomColor:'#E9E9E9'}}>
         <View style={{width:70, height:90, paddingHorizontal:10, paddingVertical:20}}>

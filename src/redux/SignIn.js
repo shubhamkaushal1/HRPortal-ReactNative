@@ -24,6 +24,7 @@ import { setDetails, setToken, setJWT, setAppUrl, setLeavetype, setLeavelist, se
 
 
 const SignIn: () => Node = ({ navigation }) => {
+  
   const dispatch = useDispatch();
   const apiUrl = 'https://8c8c-203-145-168-10.ngrok.io';
   const displayData = async () => {

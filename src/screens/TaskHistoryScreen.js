@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { View, Switch, StyleSheet, Text,FlatList } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import { LoggingOut } from "../api/firebaseMethods";
@@ -9,15 +9,32 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
  faListCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { taskHistoryApi } from '../api/apis';
 
 const TaskHistoryScreen = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const data = useSelector(state => state.userReducer);
   const [selectedId, setSelectedId] = useState(null);
+  const [taskHistory, setTaskHistory] = useState(null);
   // const { details, token } = useSelector(state => state.userReducer);
+  
   const dispatch = useDispatch();
+  const displayData = async () => {
+    try {
+      let jwtToken = await AsyncStorage.getItem('jwtToken');
+      taskHistoryApi(jwtToken,setTaskHistory);
+    }
+    catch (error) {
+      alert(error)
+    }
+  }
+    useEffect(() => {
+      displayData();
+
+    }, [])
   Moment.locale('en');
-  const taskData = data.taskReport;
+  const taskData = taskHistory;
 
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
     <View style={{flexDirection:'row', borderBottomWidth:1, borderBottomColor:'#E9E9E9'}}>
@@ -57,23 +74,15 @@ const TaskHistoryScreen = () => {
           <View>
             <Text style={{fontFamily:'Proxima Nova', fontSize:20,color:'#13171A', fontWeight:'600'}}>Task History</Text>
           </View>
-          {/* <View style={{borderRadius:15, width:130, backgroundColor:'#F4F5F7', marginLeft:50}}> */}
-            {/* <Dropdown 
-              style={{borderRadius:15,borderColor:'#DBDBDB', borderWidth:1}}
-              data={filterData}
-              labelField="label"
-              valueField="value"
-              onChange={item => {
-                setFilter(item.value);
-                // setIsFocus(false);
-              }} /> */}
-          {/* </View> */}
+
         </View>
         <View>
           <FlatList
             data={taskData}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item, index) => {
+              return index.toString();
+            }}
             extraData={selectedId}
           />
         </View>

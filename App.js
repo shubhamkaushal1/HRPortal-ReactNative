@@ -31,16 +31,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Drawer = createDrawerNavigator();
 // const Stack = createStackNavigator();
 const Stack = createNativeStackNavigator();
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        onPress={() => navigation.navigate('Leaves')}
-        title="Go to notifications"
-      />
-    </View>
-  );
-}
+
 export default function App() {
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -49,6 +40,7 @@ export default function App() {
   React.useEffect(() => {
     SplashScreen.hide();
   });
+  
   if (!firebase.apps.length) {
     console.log('Connected with Firebase')
     firebase.initializeApp(apiKeys.firebaseConfig);
@@ -62,21 +54,17 @@ export default function App() {
         
 
         <Drawer.Navigator useLegacyImplementation screenOptions={{ drawerStyle: { backgroundColor: '#FFF', width: 240 } }}>
-       
-          <Drawer.Screen name="SignIn" component={SignIn} options={{ headerShown: false,drawerLabel: () => null }}/>
-          {/* <Stack.Screen
-          name="Home"
-          component={EventsScreen}
-          options={{ title: 'Welcome' }}
-        /> */}
-        <Stack.Screen name="Profile" component={Attendence}  />
-          <Drawer.Screen name="Dashboard" component={Dashboard} options={{ title: 'My home', headerStyle: { backgroundColor: '#28AAF9', }, headerShown: true, headerTitle:()=>null, headerTintColor: '#fff', headerTitleStyle: { fontWeight: 'bold', } }}/>
+          <Drawer.Screen name="SignIn" component={SignIn} options={{ headerShown: false,    drawerItemStyle: {
+       display: "none",
+     }, drawerLabel: () => null }}/>
+          <Drawer.Screen name="Dashboard" component={Dashboard} options={{ headerStyle: { backgroundColor: '#28AAF9', }, headerShown: true, headerTitle:()=>null, headerTintColor: '#fff', headerTitleStyle: { fontWeight: 'bold', } }}/>
           <Drawer.Screen name="Attendence" component={Attendence} options={{ headerShown: true,headerTitle:()=>null }}/>
-          <Drawer.Screen name="Home" component={HomeScreen} />
-          <Drawer.Screen name="LeaveApplyScreen" component={LeaveApplyScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
+          <Drawer.Screen name="LeaveApplyScreen" component={LeaveApplyScreen} options={{ headerShown: true, drawerItemStyle: {display: "none"},headerTitle:()=>null }}/>
           <Drawer.Screen name="Leaves" component={Leavelist} options={{ headerShown: true,headerTitle:()=>null }}/>
-          <Drawer.Screen name="LeaveDetails" component={LeaveDetails} options={{ headerShown: true,headerTitle:()=>null }}/>
-          <Drawer.Screen name="Report Submit" component={ReportSubmitScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
+          <Drawer.Screen name="LeaveDetails" component={LeaveDetails} options={{ headerShown: true,    drawerItemStyle: {
+       display: "none",
+     },headerTitle:()=>null }}/>
+          <Drawer.Screen name="Report Submit" component={ReportSubmitScreen} options={{ headerShown: true, drawerItemStyle: {display: "none"},headerTitle:()=>null }}/>
           <Drawer.Screen name="Announcement" component={AnnouncementScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
           <Drawer.Screen name="Tasks History" component={TaskHistoryScreen} options={{ headerShown: true,headerTitle:()=>null }}/>
           <Drawer.Screen name="EventsScreen" component={EventsScreen} options={{ headerShown: true,headerTitle:()=>null }}/>

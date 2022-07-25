@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, View,Text,SafeAreaView,ScrollView,FlatList,Image } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,40 +10,41 @@ import Pending from "../../assets/Pending.svg";
 import Approved from "../../assets/Approved.svg";
 import Rejected from "../../assets/Rejected.svg";
 import Toast from 'react-native-toast-message';
+import {leavesListApi,leavesTypeApi,taskListApi} from '../api/apis'
 import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Leavelist({ navigation }) {
   const dispatch = useDispatch();
   const data = useSelector(state => state.userReducer);
   const apiUrl = data.appUrl;
   const [leaveId, setLeaveId] = useState(null);
-  const ViewDetails = (e,id) =>{
-    // setLeaveDetailId(id)
-    dispatch(setLeaveDetailId(id));
-    const getDetails = async() =>{
-    try{       
-      const responseData = await fetch(`${apiUrl}/api/leaves/leaves/view?id=${id}`,{
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${data.jwt}` },
-        // body: JSON.stringify({})
-      });
-      const resultData = await responseData.json();
+  const [leaveList, setLeaveListData] = useState([])
+  const displayData = async ()=>{  
 
-      dispatch(setLeaveDetails(resultData.data));
-      navigation.navigate('LeaveDetails');
-      
-      }
-      catch(err) {
-        throw err;
-        console.log(err);
-      }
-  }
-  getDetails();
+    try{  
+      let jwtToken = await AsyncStorage.getItem('jwtToken');  
+      leavesListApi(jwtToken,setLeaveListData); 
+    }  
+    catch(error){  
+      alert(error)  
+    }  
+  } 
+
+  useEffect(() => {
+     displayData();
+  }, [leaveList]);
+
+  const ViewDetails = (e,id) =>{
+    navigation.navigate('LeaveDetails',{
+      leaveId: id
+     });
+
 }
 
 
     const leavesData = () => {
       
-      const users = data.leavelist;
+      const users = leaveList;
     return ( 
       <View style={styles.container}>
         <View styele={{backgroundColor: '#fff', marginTop: 10, width: 380, height: 637}}>
@@ -63,7 +65,6 @@ export default function Leavelist({ navigation }) {
             let ftColor ;
             let statusIcon ;
             let leaveStatus = u.leave_status;
-            console.log("unstoppable",u.leave_status);
               switch (leaveStatus) {
                 case 'Pending':
                   bgColor = '#FFFCF9';
@@ -90,8 +91,8 @@ export default function Leavelist({ navigation }) {
                 break;
               }
           return (
-            <Card width={330} height={180} borderRadius={4} containerStyle={{elevation:0, backgroundColor: bgColor}} >
-              <View key={i}>
+            <Card key={i} width={330} height={180} borderRadius={4} containerStyle={{elevation:0, backgroundColor: bgColor}} >
+              <View >
                 <View style={{flexDirection: "row"}}>
                   <Text style={{fontFamily:'Proxima Nova', fontSize: 16, color: '#000', fontWeight: 'bold'}}>Status</Text>
                   <Button 
